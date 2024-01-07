@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   namespace :admin do
     get 'posts/index'
     get 'posts/show'
@@ -32,8 +33,8 @@ devise_for :users,skip: [:passwords], controllers: {
 
 # 管理者用
 # URL /admin/sign_in ...
-devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
-  sessions: "admin/sessions"
-}
+#devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+  #sessions: "admin/sessions"
+#}
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
