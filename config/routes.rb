@@ -1,35 +1,46 @@
 Rails.application.routes.draw do
-  devise_for :admins
-  namespace :admin do
-    get 'posts/index'
-    get 'posts/show'
+  devise_for :users
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    sessions: "admin/sessions"
+  }
+   namespace :admin do
+    get "/" => "homes#top"
+    get 'users/following'
+    get 'users/follower'
+    resources :posts, only: [:index,:show,:destroy]
+    resources :users, onry: [:index,:show,:destroy]
+    #resources :sessions, onry: [:new,:create,:destroy]
+    #検索機能を入れる予定
   end
-  namespace :admin do
-    get 'users/index'
-    get 'users/show'
-    get 'users/followings'
-    get 'users/followers'
+
+
+  scope module: :public do
+    root to: "homes#top"
+    resources :posts, onry: [:index,:new,:create,:show,:edit,:update,:destroy]
+    resources :post_comments, onry: [:create,:destroy]
+    resources :favorites, onry: [:create,:destroy]
+    #resources :registrations, onry: [:new,:create]
+    #resources :sessions, onry: [:new,:create,:destroy]
+    resources :users, onry: [:show,:edit,:update]
+    resources :rooms, onry: [:show,:create]
+    resources :messages, onry: [:create,:edit,:update,:destroy]
+    resources :relationships, onry: [:create,:destroy]
+
+
+    get "users/confirm" => "users#confirm"
+    patch "users/unsubscribe" => "users#unsubscribe"
+    get "users/favorites" => "users#favorites"
+    get "relationships/following" => "relationships#following"
+    get "relationships/follower" => "relationships#follower"
+    #検索機能を入れる予定
   end
-  namespace :admin do
-    get 'homes/top'
-  end
-  namespace :public do
-    get 'message/edit'
-  end
-  namespace :public do
-    get 'rooms/show'
-  end
-  namespace :public do
-    get 'user/show'
-    get 'user/edit'
-    get 'user/confirm'
-  end
+
   # 顧客用
-# URL /customers/sign_in ...
-devise_for :users,skip: [:passwords], controllers: {
-  registrations: "public/registrations",
-  sessions: 'public/sessions'
-}
+ #URL /customers/sign_in ...
+# devise_for :users,skip: [:passwords], controllers: {
+#   registrations: "public/registrations",
+#   sessions: 'public/sessions'
+# }
 
 # 管理者用
 # URL /admin/sign_in ...
