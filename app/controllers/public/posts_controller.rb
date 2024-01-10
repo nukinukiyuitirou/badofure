@@ -1,5 +1,6 @@
 class Public::PostsController < ApplicationController
   def index
+    @posts = Post.all
   end
   
   def new
@@ -18,6 +19,12 @@ class Public::PostsController < ApplicationController
   end
   
   def destroy
+  end
+  
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
   
 end

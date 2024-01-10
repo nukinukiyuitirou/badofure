@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <h3>投稿フォーム</h3>
+  </div>
+  <div class="row">
+   <div class="col-3" >
+    </div>
+    <div class="col-6">
+      <%= form_with model:@post,url:posts_path do |f| %>
+        <table>
+          <tbody>
+              <tr>
+              　<td>求めるレベル</td>
+              　<td>
+              　  <%= f.file_field :level, %>
+              　</td>
+              </tr>
+              <tr>
+              　<td>地域</td>
+              　<td>
+              　  <%= f.text_field :location,  %>
+              　</td>
+              </tr>
+              <tr>
+              　<td>商品説明</td>
+              　<td>
+              　    <%= f.text_area :introduction, rows:'6', placeholder: "商品説明"  %>
+              　</td>
+              </tr>
+              <tr>
+                <td>
+                <%= f.submit '投稿',class: "btn btn-success" %>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <% end %>
+      </div>
+    <div class="col-3"></div>
+  </div>
+</div>
