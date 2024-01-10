@@ -1,4 +1,7 @@
 class Public::UsersController < ApplicationController
+  def index
+    @users = User.all
+  end
   
   def show
   end
@@ -17,5 +20,12 @@ class Public::UsersController < ApplicationController
   
   def favorites
   end
+  
+  private
+
+  def user_params
+    params.require(:user).permit(:name)
+  end
+
   
 end
