@@ -13,8 +13,36 @@ class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :region
   has_one_attached :profile_image
+  validates :level, presence: true
 
-  def get_profile_image
+  # フォローしている関連付け
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+
+  # フォローされている関連付け
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "following_id", dependent: :destroy
+
+  # フォローしているユーザーを取得
+  has_many :followings, through: :active_relationships, source: :following
+
+  # フォロワーを取得
+  has_many :followers, through: :passive_relationships, source: :follower
+
+  # 指定したユーザーをフォローする
+  def follow(user)
+    active_relationships.create(following_id: user.id)
+  end
+
+  # 指定したユーザーのフォローを解除する
+  def unfollow(user)
+    active_relationships.find_by(followed_id: user.id).destroy
+  end
+
+  # 指定したユーザーをフォローしているかどうかを判定
+  def following?(user)
+    followings.include?(user)
+  end
+
+  def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
