@@ -27,7 +27,7 @@ end
      resource :favorite, only: [:create,:destroy]
    end
     get "search" => "searhs#searh"
-    resources :users, only: [:show,:edit,:update]do
+    resources :users, only: [:index,:show,:edit,:update]do
       get "confirm" => "users#confirm"
       patch "unsubscribe" => "users#unsubscribe"
       get "favorites" => "users#favorites"
@@ -44,7 +44,7 @@ end
 
 
     #検索機能を入れる予定
-  
+
 end
 
   # 顧客用

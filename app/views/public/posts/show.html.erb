@@ -1,0 +1,51 @@
+<div class=container>
+  <div class=row>
+    <div class=col-md-10.offset-md-1>
+        <table class=table.table-hover>
+            <tbody>
+                <tr>
+                    <th><%=Post.human_attribute_name(:投稿者)%></th>
+                    <td><%=link_to @post.user.name,@user%></td>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:タイトル)%></th>
+                    <td><%=@post.content%></td>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:アピールポイント)%></th>
+                    <td><%=simple_format(@post.description)%></td>
+                    <td><%=safe_join(@post.description.split("\n"),tag(:br))%></td>
+                </tr>
+                    
+                <tr>
+                    <th><%=Post.human_attribute_name(:投稿日時)%></th>
+                    <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:更新日時)%></th>
+                    <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
+                </tr>
+                    
+            </tbody>
+        </table>              
+    </div>
+    .col-md-10.offset-md-1
+        u
+            h6 評価する
+        #like_btn
+            = render partial: 'likes/like', locals:{ post: @post,like: @like}
+        - if current_user.admin?
+            = link_to '削除',@post,method: :delete,data: {confirm: "募集内容を削除します。よろしいですか？"},class: 'btn btn-danger my-3'
+        - if user_signed_in? && current_user.id == @user.id
+            = link_to '編集',edit_post_path,class: 'btn btn-primary mr-3 my-3'
+            = link_to '削除',@post,method: :delete,data: {confirm: "募集内容を削除します。よろしいですか？"},class: 'btn btn-danger my-3'
+        
+        br
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        br
+            = link_to "一覧に戻る",posts_path
+  </div>
+</div>
+
+
+        
