@@ -11,20 +11,21 @@
           <tbody>
               <tr>
               　<td>求めるレベル</td>
-              　<td>
-              　  <%= f.file_field :level, %>
+              　<td id='level'>
+                  <%= f.label :level,'レベル ' %>
+                  <%= f.hidden_field :level, id:'level_star' %>
               　</td>
               </tr>
               <tr>
               　<td>地域</td>
               　<td>
-              　  <%= f.text_field :location,  %>
+              　 <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
               　</td>
               </tr>
               <tr>
               　<td>投稿文</td>
               　<td>
-              　    <%= f.text_area :introduction, rows:'6', placeholder: "投稿文"  %>
+              　    <%= f.text_area :text, rows:'6', placeholder: "投稿文"  %>
               　</td>
               </tr>
               <tr>
@@ -39,3 +40,17 @@
     <div class="col-3"></div>
   </div>
 </div>
+
+<script>
+  $(document).on('turbolinks:load', function() {
+    let elem = document.querySelector('#level');
+    if (elem == null) return;
+    elem.innerHTML = "";
+    let opt = {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      scoreName: 'post[level]',
+    };
+    raty(elem, opt);
+  });
+</script>

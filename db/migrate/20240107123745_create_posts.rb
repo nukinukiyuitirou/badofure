@@ -2,9 +2,9 @@ class CreatePosts < ActiveRecord::Migration[6.1]
   def change
     create_table :posts do |t|
       t.integer :user_id, null: false
-      t.integer :location, null: false
       t.text :text, null: false
       t.integer :level, null: false
+      t.integer :region_id, null: false
       t.timestamps
     end
   end

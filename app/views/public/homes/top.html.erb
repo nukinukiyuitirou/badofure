@@ -30,7 +30,7 @@
             <center>
               <%= link_to 'ログイン', new_user_session_path, class: "btn btn-secondary" %>
               <%= link_to '新規登録', new_user_registration_path, class: "btn btn-secondary" %>
-              <%#= link_to 'ゲストログイン', post_user_guest_sign_in_path, class: "btn btn-secondary" %>
+              <%= link_to 'ゲストログイン', users_guest_sign_in_path, class: "btn btn-secondary", method: :post %>
             </center>
           </div>
           <div class="col-1" ></div>

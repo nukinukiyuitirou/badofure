@@ -1,2 +1,61 @@
-<h1>Admin::Posts#show</h1>
-<p>Find me in app/views/admin/posts/show.html.erb</p>
+<div class=container>
+  <div class=row>
+    <div class=col-md-10.offset-md-1>
+        <table class=table.table-hover>
+            <tbody>
+                <tr>
+                    <th><%=Post.human_attribute_name(:投稿者)%></th>
+                    <td><%=link_to @post.user.name,admin_user_path(@post.user.id)%></td>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:求めるレベル)%></th>
+                    <td id="level<%= @post.id%>"></td>
+                    <script>
+                    $(document).on('turbolinks:load', function() {
+                      let elem = document.querySelector('#level<%= @post.id%>');
+                      if (elem == null) return;
+                      elem.innerHTML = "";
+                      let opt = {
+                        size      : 36,
+                        starOff   : '<%= asset_path('star-off.png') %>',
+                        starOn    : '<%= asset_path('star-on.png') %>',
+                        half      : false,
+                        readOnly: true,
+                        score: <%= @post.level %>,
+                      }
+                      raty(elem, opt);
+                    });
+                    </script>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:地域)%></th>
+                    <td><%= @post.region.name  %></td>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:内容)%></th>
+                    <td><%= @post.text %></td>
+                </tr>
+
+                <tr>
+                    <th><%=Post.human_attribute_name(:投稿日時)%></th>
+                    <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
+                </tr>
+                <tr>
+                    <th><%=Post.human_attribute_name(:更新日時)%></th>
+                    <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+</div>
+
+        <%= link_to "Destroy", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+
+        <%= link_to "一覧に戻る",posts_path %>
+
+
+
+

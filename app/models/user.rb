@@ -13,7 +13,34 @@ class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :region
   has_one_attached :profile_image
+  validates :email, presence: true
+  validates :encrypted_password, presence: true
+  validates :name, presence: true
+  validates :introduction, presence: true
   validates :level, presence: true
+  validates :shot, presence: true
+  validates :is_active, presence: true
+  validates :is_sex, presence: true
+  validates :region_id, presence: true
+
+
+  GUEST_USER_EMAIL = "guest@example.com"
+
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+      user.introduction = "ゲスト"
+      user.level = 1
+      user.shot = "クリア"
+      user.region_id = 2
+
+    end
+  end
+
+  def guest_user?
+    email == GUEST_USER_EMAIL
+  end
 
   # フォローしている関連付け
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy

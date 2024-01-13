@@ -27,15 +27,17 @@ end
      resource :favorite, only: [:create,:destroy]
    end
     get "search" => "searhs#searh"
+
+    devise_scope :user do
     resources :users, only: [:index,:show,:edit,:update]do
-      get "confirm" => "users#confirm"
-      patch "unsubscribe" => "users#unsubscribe"
+      patch "unsubscribe" => "users#unsubscribe", as: "users_unsubscrites"
       get "favorites" => "users#favorites"
       patch "withdraw" => "users#withdraw"
       resources :relationships, only: [:create,:destroy]
         get "following" => "relationships#followings", as: "followings"
         get "follower" => "relationships#followers", as: "followers"
-        post "guest_sign_in", to: "sessions#guest_sign_in"
+    end
+        post "users/guest_sign_in", to: "sessions#guest_sign_in"
     end
     resources :rooms, only: [:show,:create]
     resources :messages, only: [:create,:edit,:update,:destroy]
