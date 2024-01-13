@@ -77,9 +77,9 @@ ActiveRecord::Schema.define(version: 2024_01_10_112702) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "location", null: false
     t.text "text", null: false
     t.integer "level", null: false
+    t.integer "region_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

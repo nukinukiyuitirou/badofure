@@ -5,18 +5,37 @@
             <tbody>
                 <tr>
                     <th><%=Post.human_attribute_name(:投稿者)%></th>
-                    <td><%=link_to @post.user.name,@user%></td>
+                    <td><%=link_to @post.user.name%></td>
                 </tr>
                 <tr>
-                    <th><%=Post.human_attribute_name(:タイトル)%></th>
-                    <td><%=@post.content%></td>
+                    <th><%=Post.human_attribute_name(:求めるレベル)%></th>
+                    <td id="level<%= @post.id%>"></td>
+                    <script>
+                    $(document).on('turbolinks:load', function() {
+                      let elem = document.querySelector('#level<%= @post.id%>');
+                      if (elem == null) return;
+                      elem.innerHTML = "";
+                      let opt = {
+                        size      : 36,
+                        starOff   : '<%= asset_path('star-off.png') %>',
+                        starOn    : '<%= asset_path('star-on.png') %>',
+                        half      : false,
+                        readOnly: true,
+                        score: <%= @post.level %>,
+                      }
+                      raty(elem, opt);
+                    });
+                    </script>
                 </tr>
                 <tr>
-                    <th><%=Post.human_attribute_name(:アピールポイント)%></th>
-                    <td><%=simple_format(@post.description)%></td>
-                    <td><%=safe_join(@post.description.split("\n"),tag(:br))%></td>
+                    <th><%=Post.human_attribute_name(:地域)%></th>
+                    <td><%= @post.region.name  %></td>
                 </tr>
-                    
+                <tr>
+                    <th><%=Post.human_attribute_name(:内容)%></th>
+                    <td><%= @post.text %></td>
+                </tr>
+
                 <tr>
                     <th><%=Post.human_attribute_name(:投稿日時)%></th>
                     <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
@@ -25,27 +44,18 @@
                     <th><%=Post.human_attribute_name(:更新日時)%></th>
                     <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
                 </tr>
-                    
+
             </tbody>
-        </table>              
+        </table>
     </div>
-    .col-md-10.offset-md-1
-        u
-            h6 評価する
-        #like_btn
-            = render partial: 'likes/like', locals:{ post: @post,like: @like}
-        - if current_user.admin?
-            = link_to '削除',@post,method: :delete,data: {confirm: "募集内容を削除します。よろしいですか？"},class: 'btn btn-danger my-3'
-        - if user_signed_in? && current_user.id == @user.id
-            = link_to '編集',edit_post_path,class: 'btn btn-primary mr-3 my-3'
-            = link_to '削除',@post,method: :delete,data: {confirm: "募集内容を削除します。よろしいですか？"},class: 'btn btn-danger my-3'
-        
-        br
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        br
-            = link_to "一覧に戻る",posts_path
-  </div>
+    </div>
+    </div>
 </div>
+        <% if @post.user == current_user %>
+        <%= link_to "edit",edit_post_path(@post.id),class: "btn btn-success" %>
+        <%= link_to "Destroy", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+        <% end %>
+        <%= link_to "一覧に戻る",posts_path %>
 
 
-        
+

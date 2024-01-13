@@ -5,11 +5,11 @@
   <tr><%= image_tag @user.get_profile_image(100,100) %></tr>
   <tr>
     <th>follows</th>
-    <th><%#= link_to @user.followings.count, user_followings_path(@user) %></th>
+    <th><%= link_to @user.followings.count, user_followings_path(@user) %></th>
   </tr>
   <tr>
     <th>followers</th>
-    <th><%#= link_to @user.followers.count, user_followers_path(@user) %></th>
+    <th><%= link_to @user.followers.count, user_followers_path(@user) %></th>
   </tr>
 </table>
 </div>
@@ -19,8 +19,10 @@
 	  <th>name</th>
 	  <th><%= @user.name %></th>
   </tr>
-  <td>
-    <div id="level<%= @user.id%>"></td>
+  <tr>
+  <th>level</th>
+  <th>
+    <div id="level<%= @user.id%>"></th>
     <script>
     $(document).on('turbolinks:load', function() {
       let elem = document.querySelector('#level<%= @user.id%>');
@@ -37,7 +39,8 @@
       raty(elem, opt);
     });
     </script>
-  </td>
+  </th>
+  </tr>
   <tr>
 	  <th>shot</th>
 	  <th><%= @user.shot %></th>
@@ -55,7 +58,11 @@
 	  <th><%= @user.introduction %></th>
   </tr>
   <tr>
-    <th><%= link_to '編集する', edit_user_path(@user), class: 'btn btn-success' %></th>
+  <% unless @user.guest_user? %>
+    <div class="row">
+      <th><%= link_to "編集",edit_user_path(@user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{@user.id}" %></th>
+    </div>
+  <% end %>
   </tr>
   </table>
   </div>
