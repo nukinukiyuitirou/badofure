@@ -24,10 +24,19 @@ class Public::UsersController < ApplicationController
     end
   end
 
-  def confirm
+  def unsubscribe
+    @user = current_user
+
   end
 
-  def unsubscribe
+  def withdraw
+    @user = User.find(params[:user_id])
+    pp "params------------#{params}"
+    pp "user--------------------------------#{@user.inspect}"
+    @user.update(is_active: false)
+    # pp "user2--------------------------------#{@user.inspect}"
+    #reset_session
+    #redirect_to root_path
   end
 
   def favorites

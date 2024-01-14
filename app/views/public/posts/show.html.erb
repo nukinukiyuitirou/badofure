@@ -1,61 +1,91 @@
 <div class=container>
   <div class=row>
     <div class=col-md-10.offset-md-1>
-        <table class=table.table-hover>
-            <tbody>
-                <tr>
-                    <th><%=Post.human_attribute_name(:投稿者)%></th>
-                    <td><%=link_to @post.user.name%></td>
-                </tr>
-                <tr>
-                    <th><%=Post.human_attribute_name(:求めるレベル)%></th>
-                    <td id="level<%= @post.id%>"></td>
-                    <script>
-                    $(document).on('turbolinks:load', function() {
-                      let elem = document.querySelector('#level<%= @post.id%>');
-                      if (elem == null) return;
-                      elem.innerHTML = "";
-                      let opt = {
-                        size      : 36,
-                        starOff   : '<%= asset_path('star-off.png') %>',
-                        starOn    : '<%= asset_path('star-on.png') %>',
-                        half      : false,
-                        readOnly: true,
-                        score: <%= @post.level %>,
-                      }
-                      raty(elem, opt);
-                    });
-                    </script>
-                </tr>
-                <tr>
-                    <th><%=Post.human_attribute_name(:地域)%></th>
-                    <td><%= @post.region.name  %></td>
-                </tr>
-                <tr>
-                    <th><%=Post.human_attribute_name(:内容)%></th>
-                    <td><%= @post.text %></td>
-                </tr>
-
-                <tr>
-                    <th><%=Post.human_attribute_name(:投稿日時)%></th>
-                    <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
-                </tr>
-                <tr>
-                    <th><%=Post.human_attribute_name(:更新日時)%></th>
-                    <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
-    </div>
-    </div>
-</div>
-        <% if @post.user == current_user %>
-        <%= link_to "edit",edit_post_path(@post.id),class: "btn btn-success" %>
-        <%= link_to "Destroy", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+      <table class=table.table-hover>
+        <tbody>
+          <tr>
+            <th><%=Post.human_attribute_name(:投稿者)%></th>
+            <td><%=link_to @post.user.name,user_path(@post.user) %></td>
+          </tr>
+          <tr>
+            <th><%=Post.human_attribute_name(:求めるレベル)%></th>
+            <td id="level<%= @post.id%>"></td>
+            <script>
+                $(document).on('turbolinks:load', function() {
+                  let elem = document.querySelector('#level<%= @post.id%>');
+                  if (elem == null) return;
+                  elem.innerHTML = "";
+                  let opt = {
+                    size      : 36,
+                    starOff   : '<%= asset_path('star-off.png') %>',
+                    starOn    : '<%= asset_path('star-on.png') %>',
+                    half      : false,
+                    readOnly: true,
+                    score: <%= @post.level %>,
+                  }
+                  raty(elem, opt);
+                });
+              </script>
+          </tr>
+          <tr>
+            <th><%=Post.human_attribute_name(:地域)%></th>
+            <td><%= @post.region.name  %></td>
+          </tr>
+          <tr>
+            <th><%=Post.human_attribute_name(:内容)%></th>
+            <td><%= @post.text %></td>
+            <td>
+              <% if @post.favorited_by?(current_user) %>
+                <%= link_to post_favorite_path(@post), method: :delete do %>
+                  <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+                  <%= @post.favorites.count %> いいね
+                <% end %>
+              <% else %>
+                <%= link_to post_favorite_path(@post), method: :post do %>
+                  <i class="fas fa-heart" aria-hidden="true"></i>
+                  <%= @post.favorites.count %> いいね
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th><%=Post.human_attribute_name(:投稿日時)%></th>
+            <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
+          </tr>
+          <tr>
+            <th><%=Post.human_attribute_name(:更新日時)%></th>
+            <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <p>コメント件数：<%= @post.comments.count %></p>
+        <% @post.comments.each do |comment| %>
+        <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
+        <%= comment.user.name %>
+        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
         <% end %>
-        <%= link_to "一覧に戻る",posts_path %>
+        </div>
+      <div>
+        <%= form_with model: [@post, @comment] do |f| %>
+          <%= render 'layouts/error_messages', model: f.object %>
+          <%= f.hidden_field :post_id, value: @post.id %>
+          <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+          <%= f.submit "送信する" %>
+        <% end %>
+        <% if comment.user == current_user %>
+          <%= link_to "削除", post_comment_path(@post.id, @comment.id), method: :delete %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @post.user == current_user %>
+  <%= link_to "edit",edit_post_path(@post.id),class: "btn btn-success" %>
+  <%= link_to "Destroy", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+<% end %>
+<%= link_to "一覧に戻る",posts_path %>
 
 
 

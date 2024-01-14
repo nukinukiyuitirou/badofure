@@ -23,7 +23,7 @@ end
   scope module: :public do
     root to: "homes#top"
     resources :posts, only: [:index,:new,:create,:show,:edit,:update,:destroy] do
-     resources :post_comments, only: [:create,:destroy]
+     resources :comments, only: [:create,:destroy]
      resource :favorite, only: [:create,:destroy]
    end
     get "search" => "searhs#searh"
@@ -33,9 +33,9 @@ end
       patch "unsubscribe" => "users#unsubscribe", as: "users_unsubscrites"
       get "favorites" => "users#favorites"
       patch "withdraw" => "users#withdraw"
-      resources :relationships, only: [:create,:destroy]
-        get "following" => "relationships#followings", as: "followings"
-        get "follower" => "relationships#followers", as: "followers"
+      resource :relationship, only: [:create,:destroy]
+      get "following" => "relationships#followings", as: "followings"
+      get "follower" => "relationships#followers", as: "followers"
     end
         post "users/guest_sign_in", to: "sessions#guest_sign_in"
     end
