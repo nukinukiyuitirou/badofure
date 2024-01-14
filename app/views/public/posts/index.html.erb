@@ -1,4 +1,4 @@
-<h1>投稿一覧</h1>
+<h1>投稿一覧</h1><span><%= link_to "投稿はこちらから",new_post_path %></span>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -35,6 +35,19 @@
     </script>
     </div>
         <td><%= link_to post.text,post_path(post.id) %></td>
+        <td><% if post.favorited_by?(current_user) %>
+              <%= link_to post_favorite_path(post), method: :delete do %>
+              <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+              <%= post.favorites.count %>
+            <% end %>
+            <% else %>
+              <%= link_to post_favorite_path(post), method: :post do %>
+              <i class="fas fa-heart" aria-hidden="true"></i>
+              <%= post.favorites.count %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>コメント数: <%= post.comments.count %></td>
       </tr>
       <% end %>
     </tbody>

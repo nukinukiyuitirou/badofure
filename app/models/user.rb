@@ -19,8 +19,8 @@ class User < ApplicationRecord
   validates :introduction, presence: true
   validates :level, presence: true
   validates :shot, presence: true
-  validates :is_active, presence: true
-  validates :is_sex, presence: true
+  validates :is_active, inclusion: { in: [true, false] }
+  validates :is_sex, inclusion: { in: [true, false] }
   validates :region_id, presence: true
 
 
@@ -61,12 +61,25 @@ class User < ApplicationRecord
 
   # 指定したユーザーのフォローを解除する
   def unfollow(user)
-    active_relationships.find_by(followed_id: user.id).destroy
+    active_relationships.find_by(following_id: user.id).destroy
   end
 
   # 指定したユーザーをフォローしているかどうかを判定
   def following?(user)
     followings.include?(user)
+  end
+
+  def user_status
+    if is_active == false
+      "退会"
+    else
+      "有効"
+    end
+  end
+
+  #退会したユーザーがログインできないようにする
+  def active_for_authentication?
+    super && (is_active == true)
   end
 
   def get_profile_image(width, height)

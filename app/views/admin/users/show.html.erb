@@ -1,2 +1,80 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<div class='container px-5 px-sm-0'>
+<div class='row'>
+<div class='col-md-3'>
+<table class='table'>
+  <tr><%= image_tag @user.get_profile_image(100,100) %></tr>
+  <tr>
+    <th>follows</th>
+    <th><%= link_to @user.followings.count, user_followings_path(@user) %></th>
+  </tr>
+  <tr>
+    <th>followers</th>
+    <th><%= link_to @user.followers.count, user_followers_path(@user) %></th>
+  </tr>
+</table>
+</div>
+<div class='col-md-8 offset-md-1'>
+  <table class='table2'>
+  <tr>
+    <th>user_id</th>
+    <th><%= @user.id %></th>
+  </tr>
+  <tr>
+	  <th>name</th>
+	  <th><%= @user.name %></th>
+  </tr>
+  <tr>
+    <th>status</th>
+    <th><%= @user.is_active? ? '有効' : '退会' %></th>
+  </tr>
+  <tr>
+  <th>level</th>
+  <th>
+    <div id="level<%= @user.id%>"></th>
+    <script>
+    $(document).on('turbolinks:load', function() {
+      let elem = document.querySelector('#level<%= @user.id%>');
+      if (elem == null) return;
+      elem.innerHTML = "";
+      let opt = {
+        size      : 36,
+        starOff   : '<%= asset_path('star-off.png') %>',
+        starOn    : '<%= asset_path('star-on.png') %>',
+        half      : false,
+        readOnly: true,
+        score: <%= @user.level %>,
+      }
+      raty(elem, opt);
+    });
+    </script>
+  </th>
+  </tr>
+  <tr>
+	  <th>shot</th>
+	  <th><%= @user.shot %></th>
+  </tr>
+  <tr>
+	  <th>sex</th>
+	  <th><%= @user.is_sex? ? '男性' : '女性' %></th>
+  </tr>
+  <tr>
+	  <th>location</th>
+	  <th><%= @user.region.name %></th>
+  </tr>
+  <tr>
+	  <th>introduction</th>
+	  <th><%= @user.introduction %></th>
+  </tr>
+  <tr>
+  <% unless @user.guest_user? %>
+    <div class="row">
+      <th><%= link_to "編集",edit_user_path(@user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{@user.id}" %></th>
+    </div>
+  <% end %>
+      <th><%= link_to "退会する", admin_user_path,method: :patch, class:"btn btn-danger" %></th>
+  </tr>
+  </table>
+  </div>
+  </div>
+  </div>
+</div>

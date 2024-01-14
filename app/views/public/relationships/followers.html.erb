@@ -1,4 +1,5 @@
-<h1>Users</h1>
+<h2>Follower Users</h2>
+<% if @users.exists? %>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -7,7 +8,7 @@
         <th>性別</th>
         <th>レベル</th>
         <th>地域</th>
-        <th>ステータス</th>
+        <th>フォロー</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -15,7 +16,7 @@
       <% @users.each do |user| %>
       <tr>
         <td><%= image_tag user.get_profile_image(100,100) %></td>
-        <td><%= link_to user.name, admin_user_path(user) %></td>
+        <td><%= link_to user.name, user_path(user) %></td>
         <td><%= user.is_sex? ? '男性' : '女性' %></td>
         <td>
           <div id="level<%= user.id%>"></td>
@@ -37,8 +38,17 @@
            </script>
           </div>
         <td><%= user.region.name %></td>
-        <td><%= user.is_active? ? '有効' : '退会' %></td>
+          <% if current_user != user %>
+          <% if current_user.following?(user) %>
+        <td><%= link_to "フォロー外す", user_relationship_path(user.id), class: "btn btn-danger" %></td>
+          <% else %>
+        <td><%= link_to "フォローする", user_relationship_path(user.id), class: "btn btn-success" %></td>
+          <% end %>
+          <% end %>
       </tr>
       <% end %>
     </tbody>
   </table>
+<% else %>
+  <p>ユーザーはいません</p>
+<% end %>
