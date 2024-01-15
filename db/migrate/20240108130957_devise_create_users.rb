@@ -19,7 +19,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.integer :level, null: false
       t.string :shot, null: false
       t.boolean :is_active, null: false, default: true
-      t.boolean :is_sex, null: false,default: true
+      t.integer :is_sex, null: false
       t.integer :region_id, null: false
 
       ## Trackable

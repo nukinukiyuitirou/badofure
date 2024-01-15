@@ -1,4 +1,20 @@
 <h1>Users</h1>
+<%= form_with url: users_path, local: true, method: :get do |f| %>
+  <div>
+    <p><%= f.radio_button :is_sex, "man" %>男性</p>
+    <p><%= f.radio_button :is_sex, "woman" %>女性</p>
+  </div>
+  <div id="level">
+      <%= f.label :level,'レベル ' %>
+      <%= f.hidden_field :level, id:'level_star' %>
+  </div>
+  <div>
+    <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+  </div>
+  
+  <%= f.submit "kennsaku", class: "btn-sm btn-primary" %>
+<% end %>
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -13,10 +29,11 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
+        <% if user.is_active %>
       <tr>
         <td><%= image_tag user.get_profile_image(100,100) %></td>
         <td><%= link_to user.name, user_path(user) %></td>
-        <td><%= user.is_sex? ? '男性' : '女性' %></td>
+        <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
         <td>
           <div id="level<%= user.id%>"></td>
            <script>
@@ -38,13 +55,28 @@
           </div>
         <td><%= user.region.name %></td>
           <% if current_user != user %>
-          <% if current_user.following?(user) %>
+            <% if current_user.following?(user) %>
         <td><%= link_to "フォロー外す", user_relationship_path(user.id), method: :delete, class: "btn btn-danger" %></td>
-          <% else %>
+            <% else %>
         <td><%= link_to "フォローする", user_relationship_path(user.id), method: :post, class: "btn btn-success" %></td>
-          <% end %>
+            <% end %>
           <% end %>
       </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
+  
+  <script>
+  $(document).on('turbolinks:load', function() {
+    let elem = document.querySelector('#level');
+    if (elem == null) return;
+    elem.innerHTML = "";
+    let opt = {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      scoreName: 'level',
+    };
+    raty(elem, opt);
+  });
+</script>

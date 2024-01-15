@@ -1,6 +1,5 @@
 <div class="container">
       <h3 class="ml-5"><strong>新規会員登録</strong></h3>
-
       <%= form_with model: @user, url:  user_registration_path do |f| %>
 
         <%= render "public/shared/error_messages", resource: resource %>
@@ -41,8 +40,8 @@
        <tr>
           <td>性別</td>
             <td>
-              <p><%= f.radio_button :is_sex, :true %>男性</p>
-              <p><%= f.radio_button :is_sex, :false %>女性</p>
+              <p><%= f.radio_button :is_sex, "man" %>男性</p>
+              <p><%= f.radio_button :is_sex, "woman" %>女性</p>
             </td>
         </tr>
       <tr>

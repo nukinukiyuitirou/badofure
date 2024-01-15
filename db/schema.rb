@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 2024_01_10_112702) do
     t.integer "level", null: false
     t.string "shot", null: false
     t.boolean "is_active", default: true, null: false
-    t.boolean "is_sex", default: true, null: false
+    t.integer "is_sex", null: false
     t.integer "region_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

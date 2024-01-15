@@ -6,13 +6,15 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  has_many :relationships, dependent: :destroy
   has_many :rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :region
   has_one_attached :profile_image
+
+  enum is_sex: { man: 0, woman: 1}
+
   validates :email, presence: true
   validates :encrypted_password, presence: true
   validates :name, presence: true
@@ -20,7 +22,7 @@ class User < ApplicationRecord
   validates :level, presence: true
   validates :shot, presence: true
   validates :is_active, inclusion: { in: [true, false] }
-  validates :is_sex, inclusion: { in: [true, false] }
+  # validates :is_sex, inclusion: { in: [0, 1] }
   validates :region_id, presence: true
 
 

@@ -61,9 +61,12 @@
       <div>
         <p>コメント件数：<%= @post.comments.count %></p>
         <% @post.comments.each do |comment| %>
-        <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
-        <%= comment.user.name %>
-        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+          <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
+          <%= comment.user.name %>
+          <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+          <% if comment.user == current_user %>
+            <%= link_to "削除", post_comment_path(@post.id, comment.id), method: :delete,class: "btn btn-danger" %>
+          <% end %>
         <% end %>
         </div>
       <div>
@@ -72,9 +75,6 @@
           <%= f.hidden_field :post_id, value: @post.id %>
           <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
           <%= f.submit "送信する" %>
-          <% if @comment.user == current_user %>
-            <%= link_to "削除", post_comment_path(@post.id, @comment.id), method: :delete,class: "btn btn-danger" %>
-          <% end %>
         <% end %>
       </div>
     </div>
