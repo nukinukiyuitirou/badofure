@@ -67,16 +67,74 @@
 	  <th>introduction</th>
 	  <th><%= @user.introduction %></th>
   </tr>
-  <tr>
   <% unless @user.guest_user? %>
     <div class="row">
       <th><%= link_to "編集",edit_user_path(@user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{@user.id}" %></th>
     </div>
   <% end %>
+  <% if current_user == @user %>
+      <th><%= link_to "編集",edit_user_path(@user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{@user.id}" %></th>
       <th><%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %></th>
-  </tr>
+  <% end %>
   </table>
   </div>
   </div>
   </div>
-</div>
+  </div>
+  <tr>
+  <h1><%= @user.name %>さんの過去の投稿</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>名前</th>
+        <th>性別</th>
+        <th>レベル</th>
+        <th>投稿文</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+   <tbody>
+      <% @user.posts.each do |post| %>
+      <tr>
+        <td><%= link_to image_tag(post.user.get_profile_image(100,100)) ,user_path(post.user.id) %></td>
+        <td><%= link_to post.user.name,user_path(post.user.id) %></td>
+        <td><%= post.user.is_sex? ? '男性' : '女性' %></td>
+        <td><div id="level<%= post.id%>"></td>
+        <script>
+    $(document).on('turbolinks:load', function() {
+      let elem = document.querySelector('#level<%= post.id%>');
+      if (elem == null) return;
+      elem.innerHTML = "";
+      let opt = {
+        size      : 36,
+        starOff   : '<%= asset_path('star-off.png') %>',
+        starOn    : '<%= asset_path('star-on.png') %>',
+        half      : false,
+        readOnly: true,
+        score: <%= post.level %>,
+      }
+      raty(elem, opt);
+    });
+    </script>
+    </div>
+        <td><%= link_to post.text,post_path(post.id) %></td>
+        <td><% if post.favorited_by?(current_user) %>
+              <%= link_to post_favorite_path(post), method: :delete do %>
+              <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+              <%= post.favorites.count %>
+            <% end %>
+            <% else %>
+              <%= link_to post_favorite_path(post), method: :post do %>
+              <i class="fas fa-heart" aria-hidden="true"></i>
+              <%= post.favorites.count %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>コメント数: <%= post.comments.count %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </tr>
+

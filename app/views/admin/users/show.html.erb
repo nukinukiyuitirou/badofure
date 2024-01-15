@@ -66,12 +66,7 @@
 	  <th><%= @user.introduction %></th>
   </tr>
   <tr>
-  <% unless @user.guest_user? %>
-    <div class="row">
-      <th><%= link_to "編集",edit_user_path(@user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{@user.id}" %></th>
-    </div>
-  <% end %>
-      <th><%= link_to "退会する", admin_user_path,method: :patch, class:"btn btn-danger" %></th>
+    <th><%= link_to "退会する", admin_user_path,method: :delete, class:"btn btn-danger" %></th>
   </tr>
   </table>
   </div>
