@@ -5,20 +5,20 @@ Rails.application.routes.draw do
   }
    namespace :admin do
     get "/" => "homes#top"
-    resources :posts, only: [:index,:show,:destroy]do
+
+    resources :posts, only: [:index,:show,:destroy] do
       resources :comments, only: [:destroy]
       get "search" => "searchs#search"
     end
-    resources :users, only: [:index,:show,:edit,:updete,:destroy]do
-      resource :relationships, only: [:create,:show]
-        get "followings" => "relationships/followings", as: "followings"
-        get "followers" => "relationships/followers", as: "followers"
+    resources :users, only: [:index,:show,:edit,:updete,:destroy] do
+      get "following" => "relationships#followings", as: "followings"
+      get "follower" => "relationships#followers", as: "followers"
     end
 
     #resources :sessions, only: [:new,:create,:destroy]
     #検索機能を入れる予定
 
-end
+  end
 
 
   scope module: :public do

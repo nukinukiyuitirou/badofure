@@ -13,10 +13,4 @@ class Admin::UsersController < ApplicationController
     @user.destroy
     redirect_to admin_users_path
   end
-
-  def followings
-  end
-
-  def followers
-  end
 end
