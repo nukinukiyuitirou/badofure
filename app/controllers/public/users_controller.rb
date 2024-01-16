@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   before_action :ensure_guest_user, only: [:edit]
   def index
     @users = User.all
-    if params[:region_id] != "1"
+    if params[:region_id].present? && params[:region_id] != "1"
       @users = Region.find(params[:region_id]).users
     end
     if params[:is_sex].present?
@@ -12,6 +12,9 @@ class Public::UsersController < ApplicationController
     end
     if params[:level].present?
       @users = @users.where(level: params[:level])
+    end
+    if params[:name].present?
+      @users = @users.where(name: params[:name])
     end
     #byebug
   end

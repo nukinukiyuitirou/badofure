@@ -11,8 +11,11 @@
   <div>
     <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
   </div>
-  
-  <%= f.submit "kennsaku", class: "btn-sm btn-primary" %>
+  <div>
+    <%= f.text_field :name, placeholder: "Name", class: "search_input" %>
+  </div>
+
+  <%= f.submit "検索", class: "btn-sm btn-primary" %>
 <% end %>
 
   <table class="table table-striped">
@@ -66,7 +69,7 @@
       <% end %>
     </tbody>
   </table>
-  
+
   <script>
   $(document).on('turbolinks:load', function() {
     let elem = document.querySelector('#level');

@@ -1,4 +1,20 @@
 <h1>投稿一覧</h1><span><%= link_to "投稿はこちらから",new_post_path %></span>
+<%= form_with url:posts_path, local: true, method: :get do |f| %>
+  <div>
+    <p><%= f.radio_button :is_sex, "man" %>男性</p>
+    <p><%= f.radio_button :is_sex, "woman" %>女性</p>
+  </div>
+  <div id="level">
+      <%= f.label :level,'レベル ' %>
+      <%= f.hidden_field :level, id:'level_star' %>
+  </div>
+  <div>
+    <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+  </div>
+
+  <%= f.submit "検索", class: "btn-sm btn-primary" %>
+<% end %>
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -15,7 +31,7 @@
       <tr>
         <td><%= link_to image_tag(post.user.get_profile_image(100,100)) ,user_path(post.user.id) %></td>
         <td><%= link_to post.user.name,user_path(post.user.id) %></td>
-        <td><%= post.user.is_sex? ? '男性' : '女性' %></td>
+        <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
         <td><div id="level<%= post.id%>"></td>
         <script>
     $(document).on('turbolinks:load', function() {
@@ -35,20 +51,29 @@
     </script>
     </div>
         <td><%= link_to post.text,post_path(post.id) %></td>
-        <td><% if post.favorited_by?(current_user) %>
-              <%= link_to post_favorite_path(post), method: :delete do %>
-              <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-              <%= post.favorites.count %>
-            <% end %>
-            <% else %>
-              <%= link_to post_favorite_path(post), method: :post do %>
-              <i class="fas fa-heart" aria-hidden="true"></i>
-              <%= post.favorites.count %>
-            <% end %>
-          <% end %>
+      #部分テンプレートにした箇所(部分的に更新したい箇所)
+　　    <td id="favorite_buttons_<%= post.id %>">
+　　      <%= render "public/favorites/favorites", post: post %>
+　　    </td>
+　　    <td id="comment_counter">
+          <%= render "public/comments/counter", post: post %>
         </td>
         <td>コメント数: <%= post.comments.count %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
+
+  <script>
+  $(document).on('turbolinks:load', function() {
+    let elem = document.querySelector('#level');
+    if (elem == null) return;
+    elem.innerHTML = "";
+    let opt = {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      scoreName: 'level',
+    };
+    raty(elem, opt);
+  });
+</script>
