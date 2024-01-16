@@ -5,7 +5,7 @@ class Public::CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
     if @comment.save
       flash[:notice] = "success"
-      redirect_to post_path(@post)
+      # redirect_to post_path(@post)
     else
       flash.now[:alert] = "failed"
       render "public/posts/show"
@@ -14,7 +14,8 @@ class Public::CommentsController < ApplicationController
 
   def destroy
     Comment.find(params[:id]).destroy
-    redirect_to post_path(params[:post_id])
+    @post = Post.find(params[:post_id])
+    # redirect_to post_path(params[:post_id])
   end
 
   private

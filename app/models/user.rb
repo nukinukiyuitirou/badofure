@@ -36,7 +36,7 @@ class User < ApplicationRecord
       user.level = 1
       user.shot = "クリア"
       user.region_id = 2
-
+      user.is_sex = 1
     end
   end
 
