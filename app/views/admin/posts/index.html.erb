@@ -1,4 +1,19 @@
 <h1>投稿一覧</h1>
+<%= form_with url: admin_posts_path, local: true, method: :get do |f| %>
+  <div>
+    <p><%= f.radio_button :is_sex, "man" %>男性</p>
+    <p><%= f.radio_button :is_sex, "woman" %>女性</p>
+  </div>
+  <div id="level">
+    <%= f.label :level,'レベル ' %>
+    <%= f.hidden_field :level, id:'level_star' %>
+  </div>
+  <div>
+    <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+  </div>
+
+  <%= f.submit "検索", class: "btn-sm btn-primary" %>
+<% end %>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -15,7 +30,7 @@
       <tr>
         <td><%= link_to image_tag(post.user.get_profile_image(100,100)) ,admin_user_path(post.user.id) %></td>
         <td><%= link_to post.user.name,admin_user_path(post.user.id) %></td>
-        <td><%= post.user.is_sex? ? '男性' : '女性' %></td>
+        <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
         <td><div id="level<%= post.id%>"></td>
         <script>
     $(document).on('turbolinks:load', function() {
