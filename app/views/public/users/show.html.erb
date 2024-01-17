@@ -1,7 +1,9 @@
 <div class='container px-5 px-sm-0'>
-<div class='row'>
-<div class='col-md-3'>
-<table class='table'>
+  <div class='row'>""</div>
+  <div class='row'>
+    <div class='col-md-2'></div>
+    <div class='col-md-3'>
+      <table class='table'>
   <tr><%= image_tag @user.get_profile_image(100,100) %></tr>
   <tr>
     <th>follows</th>
@@ -23,14 +25,14 @@
   </tr>
 </table>
 </div>
-<div class='col-md-8 offset-md-1'>
+<div class='col-md-7'>
   <table class='table2'>
   <tr>
-	  <th>name</th>
+	  <th>名前</th>
 	  <th><%= @user.name %></th>
   </tr>
   <tr>
-  <th>level</th>
+  <th>レベル</th>
   <th>
     <div id="level<%= @user.id%>"></th>
     <script>
@@ -52,23 +54,23 @@
   </th>
   </tr>
   <tr>
-	  <th>shot</th>
+	  <th>得意なショット</th>
 	  <th><%= @user.shot %></th>
   </tr>
   <tr>
-	  <th>sex</th>
+	  <th>性別</th>
 	  <th><%= @user.is_sex == "man" ? '男性' : '女性' %></th>
   </tr>
   <tr>
-	  <th>location</th>
+	  <th>活動拠点</th>
 	  <th><%= @user.region.name %></th>
   </tr>
   <tr>
-	  <th>introduction</th>
+	  <th>自己紹介</th>
 	  <th><%= @user.introduction %></th>
   </tr>
   <% if current_user == @user && !@user.guest_user? %>
-      <th><%= link_to "編集",edit_user_path(@user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{@user.id}" %></th>
+      <th><%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %></th>
       <th><%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %></th>
   <% end %>
   </table>

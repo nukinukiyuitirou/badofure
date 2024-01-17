@@ -15,7 +15,7 @@
 
       <nav class="navbar navbar-expand bg-body-tertiary"style="background-color: #FF9900;">
         <div class="container-fluid">
-          <%= link_to "バドフレ！！", root_path, class: 'navbar-brand text-dark' %>
+          <%= link_to "バドフレ！！", root_path, class: 'navbar-brand text-light' %>
           <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -29,12 +29,12 @@
                 </li>
                 <li class="nav-item">
                   <%= link_to posts_path, class:"nav-link text-light" do %>
-                    <i class="fa-solid fa-book-open"></i> 投稿一覧
+                    <i class="fa-solid fa-envelope"></i> 投稿一覧
                   <% end %>
                 </li>
                 <li class="nav-item">
                   <%= link_to users_path, class:"nav-link text-light" do %>
-                  　<i class="fa-solid fa-book-open"></i> バドフレ一覧
+                  　<i class="fa-solid fa-user"></i> バドフレ一覧
                   <% end %>
                 </li>
                 <li class="nav-item">
@@ -45,12 +45,12 @@
               <% elsif admin_signed_in? %>
                 <li class="nav-item">
                 <%= link_to admin_posts_path, class:"nav-link text-light" do %>
-                 <i class="fa-solid fa-link"></i> 投稿一覧
+                 <i class="fa-solid fa-envelope"></i> 投稿一覧
                 <% end %>
                 </li>
                 <li class="nav-item">
                 <%= link_to admin_users_path, class:"nav-link text-light" do %>
-                 <i class="fa-solid fa-link"></i> バドフレ一覧
+                 <i class="fa-solid fa-user"></i> バドフレ一覧
                 <% end %>
                 </li>
                 <li class="nav-item">
@@ -61,12 +61,12 @@
 
               <% else %>
                 <li class="nav-item">
-                  <%= link_to new_user_registration_path , class:"nav-link text-dark" do %>
+                  <%= link_to new_user_registration_path , class:"nav-link text-light" do %>
                     <i class="fa-solid fa-user-plus"></i> 新規登録
                   <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to new_user_session_path, class:"nav-link text-dark" do %>
+                  <%= link_to new_user_session_path, class:"nav-link text-light" do %>
                     <i class="fa-solid fa-sign-in-alt"></i> ログイン
                   <% end %>
                 </li>
