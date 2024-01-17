@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :entries, dependent: :destroy
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :region

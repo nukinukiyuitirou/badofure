@@ -40,8 +40,8 @@ Rails.application.routes.draw do
     end
         post "users/guest_sign_in", to: "sessions#guest_sign_in"
     end
-    resources :rooms, only: [:show,:create]
-    resources :messages, only: [:create,:edit,:update,:destroy]
+    resources :rooms, only: [:index,:show,:create]
+    resources :messages, only: [:create]
 
 
 
