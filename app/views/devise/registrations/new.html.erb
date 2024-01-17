@@ -1,76 +1,86 @@
 <div class="container">
-      <h3 class="ml-5"><strong>新規会員登録</strong></h3>
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <h3 class="col-lg-4"><strong>新規会員登録</strong></h3>
+    <div class="col-lg-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-7">
       <%= form_with model: @user, url:  user_registration_path do |f| %>
-
         <%= render "public/shared/error_messages", resource: resource %>
-    <table class="">
-        <tr>
-        <td>ユーザーネーム </td>
-        <td></td>
-        <td><%= f.text_field :name %></td>
-      </tr>
-      <tr>
-        <td>メールアドレス</td>
-        <td></td>
-        <td><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
-      </tr>
-      <tr>
-        <td>プロフィール画像</td>
-        <td></td>
-        <td><%= f.file_field :profile_image, accept: "image/:" %></td>
-      </tr>
-      <tr>
-        <td>レベル</td>
-        <td></td>
-        <td id='level'>
-        <%= f.label :level,'レベル ' %>
-        <%= f.hidden_field :level, id:'level_star' %>
-        </td>
-        </tr>
-      <tr>
-        <td>好き、得意なショット</td>
-        <td></td>
-        <td><%= f.text_field :shot %></td>
-      </tr>
-      <tr>
-        <td>地域</td>
-        <td></td>
-        <td><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
-      </tr>
-       <tr>
-          <td>性別</td>
+        <table class="">
+          <tr>
+            <td>ユーザーネーム </td>
+            <td></td>
+            <td><%= f.text_field :name %></td>
+          </tr>
+          <tr>
+            <td>メールアドレス</td>
+            <td></td>
+            <td><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
+          </tr>
+          <tr>
+            <td>プロフィール画像</td>
+            <td></td>
+            <td><%= f.file_field :profile_image, accept: "image/:" %></td>
+          </tr>
+          <tr>
+            <td>レベル</td>
+            <td></td>
+            <td id='level'>
+            <%= f.label :level,'レベル ' %>
+            <%= f.hidden_field :level, id:'level_star' %>
+            </td>
+          </tr>
+          <tr>
+            <td>好き、得意なショット</td>
+            <td></td>
+            <td><%= f.text_field :shot %></td>
+          </tr>
+          <tr>
+            <td>地域</td>
+            <td></td>
+            <td><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
+          </tr>
+          <tr>
+            <td>性別</td>
+            <td></td>
             <td>
               <p><%= f.radio_button :is_sex, "man" %>男性</p>
               <p><%= f.radio_button :is_sex, "woman" %>女性</p>
             </td>
-        </tr>
-      <tr>
-        <td>自己紹介</td>
-        <td></td>
-        <td><%= f.text_area :introduction, rows:'6', placeholder: "自己紹介文" %></td>
-      </tr>
-      <tr>
-        <td>パスワード（6文字以上)</td>
-        <td></td>
-        <td>  <% if @minimum_password_length %>
-              <% end %>
-              <%= f.password_field :password, autocomplete: "new-password" %>
-        </td>
-      </tr>
-      <tr>
-        <td>パスワード（確認用）</td>
-        <td></td>
-        <td><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td><%= f.submit " 新 規 登 録 ", class:"btn btn-success" %></td>
-      </tr>
-  </table>
-  <% end %>
-  <h3><strong>既に登録済みの方</strong></h3>
-  <%= render "devise/shared/links" %>からログインしてください
+          </tr>
+          <tr>
+            <td>自己紹介</td>
+            <td></td>
+            <td><%= f.text_area :introduction, rows:'5', placeholder: "自己紹介文", class: "w-100", id: "comment_textarea" %></td>
+          </tr>
+          <tr>
+            <td>パスワード（6文字以上)</td>
+            <td></td>
+            <td>  <% if @minimum_password_length %>
+                  <% end %>
+                  <%= f.password_field :password, autocomplete: "new-password" %>
+            </td>
+          </tr>
+          <tr>
+            <td>パスワード（確認用）</td>
+            <td></td>
+            <td><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><%= f.submit " 新 規 登 録 ", class:"btn btn-success" %></td>
+          </tr>
+        </table>
+      <% end %>
+      <h3><strong>既に登録済みの方</strong></h3>
+      <%= render "devise/shared/links" %>からログインしてください
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
 </div>
 
 <script>
