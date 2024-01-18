@@ -31,8 +31,10 @@ Rails.application.routes.draw do
 
     devise_scope :user do
     resources :users, only: [:index,:show,:edit,:update]do
+      member do
+        get "favorites" => "users#favorites" 
+      end
       patch "unsubscribe" => "users#unsubscribe", as: "users_unsubscrites"
-      get "favorites" => "users#favorites"
       patch "withdraw" => "users#withdraw"
       resource :relationship, only: [:create,:destroy]
       get "following" => "relationships#followings", as: "followings"
