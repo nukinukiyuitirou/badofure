@@ -1,18 +1,18 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!, except: [:top]
   def index
-    @users = User.all
+    @users = User.all.page(params[:page]).per(5)
     if params[:region_id].present? && params[:region_id] != "1"
-      @users = Region.find(params[:region_id]).users
+      @users = Region.find(params[:region_id]).users.page(params[:page]).per(5)
     end
     if params[:is_sex].present?
-      @users = @users.where(is_sex: params[:is_sex])
+      @users = @users.where(is_sex: params[:is_sex]).page(params[:page]).per(5)
     end
     if params[:level].present?
-      @users = @users.where(level: params[:level])
+      @users = @users.where(level: params[:level]).page(params[:page]).per(5)
     end
     if params[:name].present?
-      @users = @users.where(name: params[:name])
+      @users = @users.where(name: params[:name]).page(params[:page]).per(5)
     end
   end
 

@@ -3,18 +3,18 @@ class Public::UsersController < ApplicationController
   # before_action :authenticate_user!
   before_action :ensure_guest_user, only: [:edit]
   def index
-    @users = User.all
+    @users = User.all.page(params[:page]).per(5)
     if params[:region_id].present? && params[:region_id] != "1"
-      @users = Region.find(params[:region_id]).users
+      @users = Region.find(params[:region_id]).users.page(params[:page]).per(5)
     end
     if params[:is_sex].present?
-      @users = @users.where(is_sex: params[:is_sex])
+      @users = @users.where(is_sex: params[:is_sex]).page(params[:page]).per(5)
     end
     if params[:level].present?
-      @users = @users.where(level: params[:level])
+      @users = @users.where(level: params[:level]).page(params[:page]).per(5)
     end
     if params[:name].present?
-      @users = @users.where(name: params[:name])
+      @users = @users.where(name: params[:name]).page(params[:page]).per(5)
     end
     #byebug
   end
@@ -34,10 +34,10 @@ class Public::UsersController < ApplicationController
         end
       end
     end
-      unless @is_room
-        @room = Room.new
-        @entry = Entry.new
-      end
+    unless @is_room
+      @room = Room.new
+      @entry = Entry.new
+    end
  end
 
   def edit
@@ -72,7 +72,6 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     favorites = Favorite.where(user_id: @user.id).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
-    @post = Post.find(params[:id])
   end
 
   def ensure_guest_user
