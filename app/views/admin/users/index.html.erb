@@ -1,4 +1,4 @@
-<h1>Users</h1>
+<h1>バドフレ一覧</h1>
 <div class="container">
   <div class='row'>
    <div class="col-5"></div>
@@ -93,6 +93,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @users %>
   <script>
   $(document).on('turbolinks:load', function() {
     let elem = document.querySelector('#level');

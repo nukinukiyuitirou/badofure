@@ -1,23 +1,24 @@
 <div class=title>
-  <h2> 
-    <%= ("#{@another_entry.user.email}さんとのメッセージ") %>
+  <h2>
+    <%= ("#{@another_entry.user.name}さんとのメッセージ") %>
 　</h2>
-<%= @messages.each do |m| %>
+<% @messages.each do |m| %>
   <%if m.user_id == current_user.id%>
     <div class="mycomment">
       <p><%= m.body %></p>
     </div>
-<% else %>
+  <% else %>
   <div class="fukidasi">
     <div class="faceicon">
       <%= image_tag m.user.email %>
     </div>
     <div class="chatting">
       <div class="says">
-        <p><%= m.body %></p> 
+        <p><%= m.body %></p>
       </div>
     </div>
   </div>
+  <% end %>
 <% end %>
 <div class="chat-form-box">
   <%= form_for @message do |f| %>
