@@ -1,19 +1,53 @@
 <h1>投稿一覧</h1>
-<%= form_with url: admin_posts_path, local: true, method: :get do |f| %>
-  <div>
-    <p><%= f.radio_button :is_sex, "man" %>男性</p>
-    <p><%= f.radio_button :is_sex, "woman" %>女性</p>
+<div class="container">
+  <div class='row'>
+   <div class="col-5"></div>
+   <div class="col-2"><h3>検索</h3></div>
+   <div class="col-5"></div>
   </div>
-  <div id="level">
-    <%= f.label :level,'レベル ' %>
-    <%= f.hidden_field :level, id:'level_star' %>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+    　<div class="d-flex">
+        <div style="margin: 0 50px 0 50px;">性別</div>
+        <div style="margin: 0 45px 0 62px;">レベル</div>
+        <div style="margin: 0 10px 0 45px;">場所</div>
+      </div>
+    </div>
+    <div class="col-3"></div>
   </div>
-  <div>
-    <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+  <div class='row'>
+    <div class="col-3"></div>
+    <div class="col-8">
+      <%= form_with url: admin_posts_path, local: true, method: :get do |f| %>
+        <div class="d-flex">
+          <div style="margin: 0 25px 0 10px;"><%= f.radio_button :is_sex, "man" %>男性</div>
+          <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
+          <div id="level" class="mx-3">
+            <%= f.label :level,'レベル ' %>
+            <%= f.hidden_field :level, id:'level_star' %>
+          </div>
+          <div>
+            <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+          </div>
+        </div>
   </div>
-
-  <%= f.submit "検索", class: "btn-sm btn-primary" %>
-<% end %>
+  <div class="col-1"></div>
+</div>
+<div class='row'>
+  <div class="col-5"></div>
+  <div class="col-2">
+    <div class="d-flex">
+      <div style="margin: 10px 0 10px 5px;"><%= f.submit "検索", class: "btn-sm btn-primary" do %>
+        <i class="fa-solid fa-magnifying-glass"></i>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-5"></div>
+</div>
+     <% end %>
+</div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -54,4 +88,17 @@
       <% end %>
     </tbody>
   </table>
+  <script>
+  $(document).on('turbolinks:load', function() {
+    let elem = document.querySelector('#level');
+    if (elem == null) return;
+    elem.innerHTML = "";
+    let opt = {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      scoreName: 'level',
+    };
+    raty(elem, opt);
+  });
+</script>
 
