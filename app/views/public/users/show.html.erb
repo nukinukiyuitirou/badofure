@@ -69,6 +69,7 @@
 	  <th>自己紹介</th>
 	  <th><%= @user.introduction %></th>
   </tr>
+  <%= link_to "ユーザーの過去の投稿",favorites_user_path(@user) %>
   <% if current_user == @user && !@user.guest_user? %>
       <th><%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %></th>
       <th><%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %></th>
