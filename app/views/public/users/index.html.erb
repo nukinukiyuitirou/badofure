@@ -1,15 +1,16 @@
-<h1>バドフレ一覧</h1>
+<div style="text-align:center;">
+<h1 style="margin: 10px 0 0 0;">バドフレ一覧</h1>
 <div class="container">
   <div class='row'>
    <div class="col-5"></div>
-   <div class="col-2"><h3>検索</h3></div>
+   <div class="col-2"><h3 style="margin: 50px 0 0 0;">検索</h3></div>
    <div class="col-5"></div>
   </div>
   <div class="row">
     <div class="col-3"></div>
     <div class="col-6">
     　<div class="d-flex">
-        <div style="margin: 0 50px 0 0;">名前</div>
+        <div style="margin: 0 50px 0 20px;">名前</div>
         <div style="margin: 0 45px 0 80px;">性別</div>
         <div style="margin: 0 10px 0 70px;">レベル</div>
         <div style="margin: 0 10px 0 70px;">場所</div>
@@ -23,7 +24,7 @@
     <%= form_with url: users_path, local: true, method: :get do |f| %>
 
   　<div class="d-flex">
-  　  　　   <div style="margin: 0 0 0 60px;"><%= f.text_field :name, placeholder: "太郎", class: "search_input" %></div>
+  　  　　   <div style="margin: 0 0 0 80px;"><%= f.text_field :name, placeholder: "太郎", class: "search_input" %></div>
           <div style="margin: 0 25px 0 10px;"><%= f.radio_button :is_sex, "man" %>男性</div>
           <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
           <div id="level" class="mx-3">
@@ -41,7 +42,7 @@
   <div class="col-5"></div>
   <div class="col-2">
     <div class="d-flex">
-      <div style="margin: 10px 0 10px 5px;"><%= f.submit "検索", class: "btn-sm btn-primary" do %>
+      <div style="margin: 10px 0 20px 65px;"><%= button_tag type: "submit", class: "btn btn-default" do %>
         <i class="fa-solid fa-magnifying-glass"></i>
       <% end %>
       </div>
@@ -103,7 +104,8 @@
       <% end %>
     </tbody>
   </table>
-  <%= paginate @users %>
+</div>
+<div class="pagination"><%= paginate @users %></div>
   <script>
   $(document).on('turbolinks:load', function() {
     let elem = document.querySelector('#level');
