@@ -1,16 +1,18 @@
 <div style="text-align:center;">
 <div class="container">
-  <div style="margin: 50px 0 0 0;"></div>
+  <div style="margin: 50px 0 0 0;">
   <div class="row">
-    <h3>投稿フォーム</h3>
+    <h3 class="offset-4 col-4">投稿フォーム</h3>
+  </div>
   </div>
   <div class="row">
-   <div class="col-3" >
+   <div class="col-4" >
     </div>
     <div class="col-6">
       <%= form_with model:@post,url:posts_path do |f| %>
         <table>
           <tbody>
+            <div class="d-flex">
               <tr>
               　<td>求めるレベル</td>
               　<td id='level'>
@@ -18,28 +20,30 @@
                   <%= f.hidden_field :level, id:'level_star' %>
               　</td>
               </tr>
-              <tr>
+              <tr style="margin: 100px 0 0 0;">
               　<td>地域</td>
               　<td>
               　 <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
               　</td>
               </tr>
-              <tr>
+              <tr style="margin: 100px 0 0 0;">
               　<td>投稿文</td>
               　<td>
               　    <%= f.text_area :text, rows:'6', placeholder: "投稿文"  %>
               　</td>
               </tr>
-              <tr>
+              <tr style="margin: 100px 0 0 0;">
+                <td></td>
                 <td>
                 <%= f.submit '投稿',class: "btn btn-success" %>
                 </td>
               </tr>
+            </div>
           </tbody>
         </table>
         <% end %>
       </div>
-    <div class="col-3"></div>
+    <div class="col-2"></div>
   </div>
 </div>
 </div>
