@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'contacts/new'
+    get 'contacts/confirm'
+    get 'contacts/done'
+  end
   devise_for :users
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
@@ -44,7 +49,14 @@ Rails.application.routes.draw do
     end
     resources :rooms, only: [:index,:show,:create]
     resources :messages, only: [:create]
-
+    
+    resources :contacts, only: [:new, :create] do
+      collection do
+          post 'confirm'
+          post 'back'
+          get 'done'
+      end
+    end
 
 
 
