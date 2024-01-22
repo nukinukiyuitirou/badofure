@@ -4,7 +4,7 @@
     <div class='col-md-2'></div>
     <div class='col-md-4' style="margin: 20px 0 0 0;">
       <table class='table'>
-        <tr><%= image_tag @user.get_profile_image(200,200), class: "rounded-circle d-block mx-auto" %></tr>
+        <tr><%= image_tag @user.get_profile_image(200,200),size:"200", class: "rounded-circle d-block mx-auto" %></tr>
       </table>
     </div>
     <div class='col-md-4' style="margin: 40px 0 0 0;">
@@ -38,8 +38,8 @@
                       <%= f.fields_for @entry do |e| %>
                         <% e.hidden_field :user_id, value: @user.id %>
                       <% end %>
-                      <%= f.button type: :submit do %>
-                        メッセージを送る
+                      <%= f.button type: :submit, class: "btn btn-success" do %>
+                        DMする
                       <% end %>
                     <% end %>
                   <% end %>
@@ -143,14 +143,14 @@
               });
             </script>
             <td><%= link_to post.text,post_path(post.id) %></td>
-            <td>
+            <td id="favorite_buttons_<%= post.id %>">
               <% if post.favorited_by?(current_user) %>
-                <%= link_to post_favorite_path(post), method: :delete do %>
+                <%= link_to post_favorite_path(post), method: :delete, remote: true  do %>
                   <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
                   <%= post.favorites.count %>
                 <% end %>
               <% else %>
-                <%= link_to post_favorite_path(post), method: :post do %>
+                <%= link_to post_favorite_path(post), method: :post, remote: true  do %>
                   <i class="fas fa-heart" aria-hidden="true"></i>
                   <%= post.favorites.count %>
                 <% end %>
