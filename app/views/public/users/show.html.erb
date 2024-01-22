@@ -1,10 +1,14 @@
 <div class='container px-5 px-sm-0'>
-  <div style="margin: 50px 0 0 0;"></div>
+  <div class="d-flex">
   <div class='row'>
     <div class='col-md-2'></div>
-    <div class='col-md-3'>
+    <div class='col-md-4' style="margin: 20px 0 0 0;">
       <table class='table'>
         <tr><%= image_tag @user.get_profile_image(200,200), class: "rounded-circle d-block mx-auto" %></tr>
+      </table>
+    </div>
+    <div class='col-md-4' style="margin: 40px 0 0 0;">
+      <table class='table2'>
         <tr>
           <th>follows</th>
           <th><%= link_to @user.followings.count, user_followings_path(@user) %></th>
@@ -13,91 +17,95 @@
           <th>followers</th>
           <th><%= link_to @user.followers.count, user_followers_path(@user) %></th>
         </tr>
-        <tr>
-          <td><% if current_user != @user %>
+        </table>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <div style="margin: 10px 0 10px 0;">
+              <% if current_user != @user %>
                 <% if current_user.following?(@user) %>
                   <%= link_to "フォロー外す", user_relationship_path(@user.id), method: :delete, class: "btn btn-danger" %>
                 <% else %>
-                  <%= link_to "フォローする", user_relationship_path(@user.id), method: :post, class:"btn btn-success" %>
+                  <%= link_to "フォローする", user_relationship_path(@user.id), method: :post, class: "btn btn-success" %>
                 <% end %>
               <% end %>
-          </td>
-        </tr>
-      </table>
+            </div>
+            <div style="margin: 10px 0 10px 10px;">
+              <% unless @user.id == current_user.id %>
+                  <% if @is_room == true %>
+                    <%= link_to 'DMする', room_path(@room_id), class: "btn btn-success" %>
+                  <% else %>
+                    <%= form_with model: @room do |f| %>
+                      <%= f.fields_for @entry do |e| %>
+                        <% e.hidden_field :user_id, value: @user.id %>
+                      <% end %>
+                      <%= f.button type: :submit do %>
+                        メッセージを送る
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+            </div>
+          </div>
+        </div>
     </div>
-    <div class='col-md-7 font-large'>
-      <table class='table2'>
-        <tr>
-      	  <th>名前</th>
-      	  <th><%= @user.name %></th>
-        </tr>
-        <tr>
-          <th>レベル</th>
+    <div class='col-md-2'></div>
+    <table class="table table-bordered">
+      <tr>
+        <td>名前</td>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <td>レベル</td>
+        <td>
+          <div id="level<%= @user.id%>"></div>
+        </td>
+        <script>
+          $(document).on('turbolinks:load', function() {
+            let elem = document.querySelector('#level<%= @user.id%>');
+            if (elem == null) return;
+            elem.innerHTML = "";
+            let opt = {
+              size      : 36,
+              starOff   : '<%= asset_path('star-off.png') %>',
+              starOn    : '<%= asset_path('star-on.png') %>',
+              half      : false,
+              readOnly: true,
+              score: <%= @user.level %>,
+            }
+            raty(elem, opt);
+          });
+        </script>
+      </tr>
+      <tr>
+        <td>得意なショット</td>
+      	<td><%= @user.shot %></td>
+      </tr>
+      <tr>
+        <td>性別</td>
+        <td><%= @user.is_sex == "man" ? '男性' : '女性' %></td>
+      </tr>
+      <tr>
+        <td>活動拠点</td>
+      	<td><%= @user.region.name %></td>
+      </tr>
+      <tr>
+        <td>自己紹介</td>
+      	<td><%= @user.introduction %></td>
+      </tr>
+    </table>
+    <div style="margin: 0 0 0 0;"><%= link_to "ユーザーのいいね一覧",favorites_user_path(@user) %></div>
+    <div style="margin: 0 0 0 800px;">
+      <% if current_user == @user && !@user.guest_user? %>
+        <%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %>
+        <%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %>
+      <% end %>
+    </div>
+    </div>
+    </div>
+    </div>
           <th>
-            <div id="level<%= @user.id%>"></div></th>
-            <script>
-            $(document).on('turbolinks:load', function() {
-              let elem = document.querySelector('#level<%= @user.id%>');
-              if (elem == null) return;
-              elem.innerHTML = "";
-              let opt = {
-                size      : 36,
-                starOff   : '<%= asset_path('star-off.png') %>',
-                starOn    : '<%= asset_path('star-on.png') %>',
-                half      : false,
-                readOnly: true,
-                score: <%= @user.level %>,
-              }
-              raty(elem, opt);
-            });
-            </script>
+
           </th>
-        </tr>
-        <tr>
-      	  <th>得意なショット</th>
-      	  <th><%= @user.shot %></th>
-        </tr>
-        <tr>
-      	  <th>性別</th>
-      	  <th><%= @user.is_sex == "man" ? '男性' : '女性' %></th>
-        </tr>
-        <tr>
-      	  <th>活動拠点</th>
-      	  <th><%= @user.region.name %></th>
-        </tr>
-        <tr>
-      	  <th>自己紹介</th>
-      	  <th><%= @user.introduction %></th>
-        </tr>
-        <tr>
-      	  <th><%= link_to "ユーザーのいいね一覧",favorites_user_path(@user) %></th>
-        </tr>
-        <tr>
-          <% if current_user == @user && !@user.guest_user? %>
-            <th><%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %></th>
-            <th><%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %></th>
-          <% end %>
-          <th>
-            <% unless @user.id == current_user.id %>
-              <% if @is_room == true %>
-                <%= link_to 'メッセージへ', room_path(@room_id) %>
-              <% else %>
-                <%= form_with model: @room do |f| %>
-                  <%= f.fields_for @entry do |e| %>
-                    <% e.hidden_field :user_id, value: @user.id %>
-                  <% end %>
-                  <%= f.button type: :submit do %>
-                    メッセージを送る
-                  <% end %>
-                <% end %>
-              <% end %>
-            <% end %>
-          </th>
-        </tr>
-      </table>
-      </div>
-      </div>
-      </div>
       <tr>
       <h1><%= @user.name %>さんの過去の投稿</h1>
       <table class="table table-striped user-show">

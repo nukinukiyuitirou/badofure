@@ -1,14 +1,13 @@
 <div class=container>
   <div class=row>
-    <div class=col-md-10.offset-md-1>
-      <table class=table.table-hover>
-        <tbody>
+    <div class=col-md-10>
+      <table class="table.table-bordered">
           <tr>
-            <th><%=Post.human_attribute_name(:投稿者)%></th>
+            <td>投稿者</td>
             <td><%=link_to @post.user.name,user_path(@post.user) %></td>
           </tr>
           <tr>
-            <th><%=Post.human_attribute_name(:求めるレベル)%></th>
+            <td>求めるレベル</td>
             <td id="level<%= @post.id%>"></td>
             <script>
                 $(document).on('turbolinks:load', function() {
@@ -28,11 +27,11 @@
               </script>
           </tr>
           <tr>
-            <th><%=Post.human_attribute_name(:地域)%></th>
+            <td>地域</td>
             <td><%= @post.region.name  %></td>
           </tr>
           <tr>
-            <th><%=Post.human_attribute_name(:内容)%></th>
+            <td>詳細</td>
             <td><%= @post.text %></td>
             <td>
               <% if @post.favorited_by?(current_user) %>
@@ -49,14 +48,13 @@
             </td>
           </tr>
           <tr>
-            <th><%=Post.human_attribute_name(:投稿日時)%></th>
+            <td>投稿日時</td>
             <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
           </tr>
           <tr>
-            <th><%=Post.human_attribute_name(:更新日時)%></th>
+            <td>更新日時</td>
             <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
           </tr>
-        </tbody>
       </table>
       <div id="comment_index">
          <%= render "public/comments/index", post: @post %>
