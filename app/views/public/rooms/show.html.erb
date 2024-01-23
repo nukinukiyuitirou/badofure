@@ -1,16 +1,17 @@
-<div class=title>
-  <h2>
+<div class=title style="text-align:center;">
+  <h2 style="margin: 50px 0 50px 0">
     <%= ("#{@another_entry.user.name}さんとのメッセージ") %>
 　</h2>
 <% @messages.each do |m| %>
+ <div class="line-bc">
   <%if m.user_id == current_user.id%>
     <div class="mycomment">
       <p><%= m.body %></p>
     </div>
   <% else %>
-  <div class="fukidasi">
+  <div class="balloon6">
     <div class="faceicon">
-      <%= image_tag m.user.email %>
+      <%= image_tag m.user.get_profile_image(100,100) %>
     </div>
     <div class="chatting">
       <div class="says">
@@ -20,6 +21,7 @@
   </div>
   <% end %>
 <% end %>
+</div>
 <div class="chat-form-box">
   <%= form_for @message do |f| %>
     <div class=chat-form-group>

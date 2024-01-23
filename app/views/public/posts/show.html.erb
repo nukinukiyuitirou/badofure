@@ -1,7 +1,11 @@
-<div class=container>
+<div style="text-align:center;">
+<h1 style="margin: 10px 0 0 0;">投稿詳細</h1>
+</div>
+ <div class=container>
   <div class=row>
-    <div class=col-md-10>
-      <table class="table table-bordered">
+    <div class=col-1></div>
+    <div class=col-10>
+      <table class="table table-bordered" style="margin: 30px 0 0 0;">
           <tr>
             <td>投稿者</td>
             <td><%=link_to @post.user.name,user_path(@post.user) %></td>
@@ -33,19 +37,6 @@
           <tr>
             <td>詳細</td>
             <td><%= @post.text %></td>
-            <td>
-              <% if @post.favorited_by?(current_user) %>
-                <%= link_to post_favorite_path(@post), method: :delete do %>
-                  <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-                  <%= @post.favorites.count %> いいね
-                <% end %>
-              <% else %>
-                <%= link_to post_favorite_path(@post), method: :post do %>
-                  <i class="fas fa-heart" aria-hidden="true"></i>
-                  <%= @post.favorites.count %> いいね
-                <% end %>
-              <% end %>
-            </td>
           </tr>
           <tr>
             <td>投稿日時</td>
@@ -56,11 +47,25 @@
             <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
           </tr>
       </table>
+      <div style="margin: 10px 0 20px 800px;">
+        <% if @post.favorited_by?(current_user) %>
+          <%= link_to post_favorite_path(@post), method: :delete do %>
+            <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+            <%= @post.favorites.count %> いいね
+          <% end %>
+        <% else %>
+          <%= link_to post_favorite_path(@post), method: :post do %>
+            <i class="fas fa-heart" aria-hidden="true"></i>
+            <%= @post.favorites.count %> いいね
+          <% end %>
+        <% end %>
+      </div>
       <div id="comment_index">
          <%= render "public/comments/index", post: @post %>
        </div>
        <%= render "public/comments/form", post: @post, comment: @comment %>
     </div>
+    <div class=col-1></div>
   </div>
 </div>
 
@@ -68,7 +73,6 @@
   <%= link_to "edit",edit_post_path(@post.id),class: "btn btn-success" %>
   <%= link_to "Destroy", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
 <% end %>
-<%= link_to "一覧に戻る",posts_path %>
 
 
 

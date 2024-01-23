@@ -49,54 +49,60 @@
 </div>
 </div>
 <% end %>
-  <table class="table table-striped post-index">
-    <thead>
-      <tr>
-        <th></th>
-        <th>名前</th>
-        <th>性別</th>
-        <th>レベル</th>
-        <th>投稿文</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @posts.each do |post| %>
-      <tr>
-        <td><%= link_to image_tag(post.user.get_profile_image(100,100)) ,user_path(post.user.id) %></td>
-        <td><%= link_to post.user.name,user_path(post.user.id) %></td>
-        <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
-        <td><div id="level<%= post.id%>"></div></td>
-        <script>
-    $(document).on('turbolinks:load', function() {
-      let elem = document.querySelector('#level<%= post.id%>');
-      if (elem == null) return;
-      elem.innerHTML = "";
-      let opt = {
-        size      : 36,
-        starOff   : '<%= asset_path('star-off.png') %>',
-        starOn    : '<%= asset_path('star-on.png') %>',
-        half      : false,
-        readOnly: true,
-        score: <%= post.level %>,
-      }
-      raty(elem, opt);
-    });
-    </script>
-        <td><%= link_to post.text,post_path(post.id) %></td>
-　　    <td id="favorite_buttons_<%= post.id %>">
-　　      <%= render "public/favorites/favorites", post: post %>
-　　    </td>
-　　    <td id="comment_counter">
-          <%= render "public/comments/counter", post: post %>
-        </td>
-      </tr>
+<% @posts.each do |post| %>
+<div class="card card-post">
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= link_to post_path(post) do %>
+        <%= post.user.name %>
       <% end %>
-    </tbody>
-  </table>
+    </h5>
+  </div>
+  <ul class="list-group-flush" style="padding-left: 0px;">
+    <li class="post-detail-group">
+      <div class="d-flex">
+        <div class="post-detail1">性別</div>
+        <div class="post-detail2"><%= post.user.is_sex == "man" ? '男性' : '女性' %></div>
+      </div>
+    </li>
+    <li class="post-detail-group">
+      <div class="d-flex">
+        <div class="post-detail1">レベル</div>
+        <div class="post-detail2"><div id="level<%= post.id%>"></div></div>
+      </div>
+      <script>
+        $(document).on('turbolinks:load', function() {
+          let elem = document.querySelector('#level<%= post.id%>');
+          if (elem == null) return;
+          elem.innerHTML = "";
+          let opt = {
+            size      : 36,
+            starOff   : '<%= asset_path('star-off.png') %>',
+            starOn    : '<%= asset_path('star-on.png') %>',
+            half      : false,
+            readOnly: true,
+            score: <%= post.level %>,
+          }
+          raty(elem, opt);
+        });
+      </script>
+    </li>
+    <li class="post-detail-group">
+      <div class="d-flex">
+        <div class="post-detail1">詳細</div>
+        <div class="post-detail2"><%= link_to post.text,post_path(post.id) %></div>
+      </div>
+    </li>
+  </ul>
+  <div class="card-body">
+    <div id="favorite_buttons_<%= post.id %>" class="text-right"><%= render "public/favorites/favorites", post: post %></div>
+    <div id="comment_counter" class="text-right"><%= render "public/comments/counter", post: post %></div>
+  </div>
+</div>
+<% end %>
 </div>
 <div class="pagination"><%= paginate @posts %></div>
-  <script>
+<script>
   $(document).on('turbolinks:load', function() {
     let elem = document.querySelector('#level');
     if (elem == null) return;
