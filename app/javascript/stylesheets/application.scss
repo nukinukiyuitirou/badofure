@@ -146,37 +146,15 @@
 .followers-index td {
   vertical-align: middle;
 }
-
-.example {/*親div*/
-  position: relative;/*相対配置*/
-}
-
-.example p {
-  position: absolute;/*絶対配置*/
-  color: white;/*文字は白に*/
-  top: 0;
-  left: 0;
-}
-
-.example img {
+.top-img {
+  background-image: url("../images/badminton-1521342_1280.jpg");
+  height: 100%;
   width: 100%;
+  background-size: cover;
+  padding-top:450px;
+  text-align: center;
 }
-
-.example {/*親div*/
-  position: relative;
-  }
-
-.example p {
-  position: absolute;
-  color: white;/*文字は白に*/
-  font-weight: bold; /*太字に*/
-  font-size: 2em;/*サイズ2倍*/
-  font-family :Quicksand, sans-serif;/*Google Font*/
-  top: 0;
-  left: 0;
-  }
-
-.example img {
-  width: 100%;
-  }
-
+.text {
+  top: 50%;
+  left: 50%;
+}

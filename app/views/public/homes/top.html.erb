@@ -1,9 +1,6 @@
-<div class="container">
-  <div class="top-img">
-    <%= image_tag "badminton-1521342_1280.jpg" %>
-  </div>
-
-  <div class="row"></div>
+<div class="top-img">
+  <div class="container">
+    <div class="text">
   <div class="row">
      <div class="col-3" ></div>
      <div class="col-6">
@@ -13,9 +10,9 @@
       </div>
      </center>
   </div>
+  <div class="col-3" ></div>
   </div>
-     <div class="col-3" ></div>
-      <div class="row">
+  <div class="row">
         <div class="col-1" ></div>
           <div class="col-10">
             <center>
@@ -26,23 +23,25 @@
             </center>
           </div>
         <div class="col-1" ></div>
-      </div>
+  </div>
 
-      <div class="row">
-        <div class="col-1" ></div>
-          <div class="col-10">
-            <center>
-              <%= link_to  new_user_session_path, class: "btn btn-primary" do %>
-               <i class="fa-solid fa-sign-in-alt"></i>
-               ログイン
-              <% end %>
-              <%= link_to  new_user_registration_path, class: "btn btn-primary" do %>
-               <i class="fa-solid fa-user-plus"></i>
-               新規登録
-              <% end %>
-              <%= link_to 'ゲストログイン', users_guest_sign_in_path, class: "btn btn-primary", method: :post %>
-            </center>
-          </div>
-          <div class="col-1" ></div>
+  <div class="row">
+    <div class="col-1" ></div>
+      <div class="col-10">
+        <center>
+          <%= link_to  new_user_session_path, class: "btn btn-primary" do %>
+           <i class="fa-solid fa-sign-in-alt"></i>
+           ログイン
+          <% end %>
+          <%= link_to  new_user_registration_path, class: "btn btn-primary" do %>
+           <i class="fa-solid fa-user-plus"></i>
+           新規登録
+          <% end %>
+          <%= link_to 'ゲストログイン', users_guest_sign_in_path, class: "btn btn-primary", method: :post %>
+        </center>
+      </div>
+      <div class="col-1" ></div>
+   </div>
    </div>
   </div>
+</div>
