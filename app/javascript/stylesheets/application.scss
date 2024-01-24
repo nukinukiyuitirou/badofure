@@ -5,6 +5,9 @@
 .rooms-index td {
   vertical-align: middle;
 }
+.favorites-index td {
+  vertical-align: middle;
+}
 .user-show td {
   vertical-align: middle;
 }
@@ -131,3 +134,49 @@
   -webkit-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
+.comment-box {
+  background-color: #eeeeee;
+   border-radius: 5px;
+   justify-self: baseline;
+   padding: 1.25em;
+}
+.followings-index td {
+  vertical-align: middle;
+}
+.followers-index td {
+  vertical-align: middle;
+}
+
+.example {/*親div*/
+  position: relative;/*相対配置*/
+}
+
+.example p {
+  position: absolute;/*絶対配置*/
+  color: white;/*文字は白に*/
+  top: 0;
+  left: 0;
+}
+
+.example img {
+  width: 100%;
+}
+
+.example {/*親div*/
+  position: relative;
+  }
+
+.example p {
+  position: absolute;
+  color: white;/*文字は白に*/
+  font-weight: bold; /*太字に*/
+  font-size: 2em;/*サイズ2倍*/
+  font-family :Quicksand, sans-serif;/*Google Font*/
+  top: 0;
+  left: 0;
+  }
+
+.example img {
+  width: 100%;
+  }
+
