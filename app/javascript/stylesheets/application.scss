@@ -5,6 +5,9 @@
 .rooms-index td {
   vertical-align: middle;
 }
+.favorites-index td {
+  vertical-align: middle;
+}
 .user-show td {
   vertical-align: middle;
 }
@@ -130,4 +133,28 @@
   border-left: 18px solid #30e852;
   -webkit-transform: rotate(-35deg);
   transform: rotate(-35deg);
+}
+.comment-box {
+  background-color: #eeeeee;
+   border-radius: 5px;
+   justify-self: baseline;
+   padding: 1.25em;
+}
+.followings-index td {
+  vertical-align: middle;
+}
+.followers-index td {
+  vertical-align: middle;
+}
+.top-img {
+  background-image: url("../images/badminton-1521342_1280.jpg");
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  padding-top:450px;
+  text-align: center;
+}
+.text {
+  top: 50%;
+  left: 50%;
 }

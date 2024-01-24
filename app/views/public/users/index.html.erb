@@ -59,7 +59,7 @@
       <% @users.each do |user| %>
         <% if user.is_active %>
       <tr>
-        <td><%= image_tag user.get_profile_image(100,100) %></td>
+        <td><%= image_tag user.get_profile_image(100,100), class: "rounded-circle d-block mx-auto" %></td>
         <td><%= link_to user.name, user_path(user) %></td>
         <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
         <td>

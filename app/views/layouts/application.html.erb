@@ -15,9 +15,11 @@
   <body>
     <header>
 
-      <nav class="navbar navbar-expand bg-body-tertiary"style="background-color: #FF9900;">
+      <nav class="navbar navbar-expand bg-body-tertiary"style="background-color: #FF8C00;">
         <div class="container-fluid">
-          <%= link_to "バドフレ！！", root_path, class: 'navbar-brand text-light' %>
+          <%= link_to root_path, class: 'navbar-brand text-light' do %>
+            <%= image_tag 'facebook_cover_photo_1.png', size: "160x64" %>
+          <% end %>
           <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
