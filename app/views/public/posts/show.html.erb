@@ -5,10 +5,20 @@
   <div class=row>
     <div class=col-1></div>
     <div class=col-10>
-      <table class="table table-bordered" style="margin: 30px 0 0 0;">
+      <div  style="margin: 0 0 0 780px;">
+        <% if @post.user == current_user %>
+          <%= link_to "編集",edit_post_path(@post.id),class: "btn btn-success" %>
+          <%= link_to "削除", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+        <% end %>
+      </div>
+      <table class="table table-bordered" style="margin: 10px 0 0 0;">
           <tr>
             <td>投稿者</td>
             <td><%=link_to @post.user.name,user_path(@post.user) %></td>
+          </tr>
+          <tr>
+            <td>性別</td>
+            <td><%= @post.user.is_sex == "man" ? '男性' : '女性' %></td>
           </tr>
           <tr>
             <td>求めるレベル</td>
@@ -78,11 +88,6 @@
         <div class=col-1></div>
       </div>
   </div>
-
-<% if @post.user == current_user %>
-  <%= link_to "edit",edit_post_path(@post.id),class: "btn btn-success" %>
-  <%= link_to "Destroy", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
-<% end %>
 
 
 

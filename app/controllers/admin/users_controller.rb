@@ -1,18 +1,18 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!, except: [:top]
   def index
-    @users = User.all.page(params[:page]).per(15)
+    @users = User.all.page(params[:page]).per(15).order(created_at: :desc)
     if params[:region_id].present? && params[:region_id] != "1"
-      @users = Region.find(params[:region_id]).users.page(params[:page]).per(15)
+      @users = Region.find(params[:region_id]).users.page(params[:page]).per(15).order(created_at: :desc)
     end
     if params[:is_sex].present?
-      @users = @users.where(is_sex: params[:is_sex]).page(params[:page]).per(15)
+      @users = @users.where(is_sex: params[:is_sex]).page(params[:page]).per(15).order(created_at: :desc)
     end
     if params[:level].present?
-      @users = @users.where(level: params[:level]).page(params[:page]).per(15)
+      @users = @users.where(level: params[:level]).page(params[:page]).per(15).order(created_at: :desc)
     end
     if params[:name].present?
-      @users = @users.where(name: params[:name]).page(params[:page]).per(15)
+      @users = @users.where(name: params[:name]).page(params[:page]).per(15).order(created_at: :desc)
     end
   end
 
