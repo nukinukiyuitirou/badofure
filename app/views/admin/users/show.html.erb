@@ -87,8 +87,8 @@
         <tbody>
           <% @user.posts.each do |post| %>
             <tr>
-              <td><%= link_to image_tag(post.user.get_profile_image(100,100), class: "rounded-circle"), admin_user_path(post.user.id) %></td>
-              <td><%= link_to post.user.name, admin_user_path(post.user.id) %></td>
+              <td><%= image_tag(post.user.get_profile_image(80,80), class: "rounded-circle") %></td>
+              <td><%= post.user.name %></td>
               <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
               <td><div id="level-<%= post.id %>"></div></td>
               <script>

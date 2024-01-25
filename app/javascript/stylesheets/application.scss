@@ -149,12 +149,22 @@
 .top-img {
   background-image: url("../images/badminton-1521342_1280.jpg");
   height: 100%;
+  min-height: 700px;
   width: 100%;
   background-size: cover;
   padding-top:450px;
   text-align: center;
 }
+.top-img-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .text {
   top: 50%;
   left: 50%;
+}
+.text-color {
+  color: white;
 }

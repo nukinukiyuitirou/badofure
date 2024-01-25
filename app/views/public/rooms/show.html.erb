@@ -1,34 +1,36 @@
-<div class=title style="text-align:center;">
+<div class="mx-auto" style="text-align:center;">
   <h2 style="margin: 50px 0 50px 0">
     <%= ("#{@another_entry.user.name}さんとのメッセージ") %>
 　</h2>
-<% @messages.each do |m| %>
- <div class="line-bc">
-  <%if m.user_id == current_user.id%>
-    <div class="mycomment">
-      <p><%= m.body %></p>
+　
+  <% @messages.each do |m| %>
+    <div class="line-bc">
+      <%if m.user_id == current_user.id%>
+        <div class="mycomment">
+          <p><%= m.body %></p>
+        </div>
+      <% else %>
+        <div class="balloon6">
+          <div class="faceicon">
+            <%= image_tag m.user.get_profile_image(100,100) %>
+          </div>
+          <div class="chatting">
+            <div class="says">
+              <p><%= m.body %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% else %>
-  <div class="balloon6">
-    <div class="faceicon">
-      <%= image_tag m.user.get_profile_image(100,100) %>
-    </div>
-    <div class="chatting">
-      <div class="says">
-        <p><%= m.body %></p>
+  <% end %>
+
+  <div class="chat-form-box">
+    <%= form_for @message do |f| %>
+      <div class=chat-form-group>
+        <%= f.text_field :body %>
+        <%= f.hidden_field :room_id, :value => @room.id %>
+        <%= f.submit "送信する" %>
       </div>
-    </div>
+    <% end %>
   </div>
-  <% end %>
-<% end %>
-</div>
-<div class="chat-form-box">
-  <%= form_for @message do |f| %>
-    <div class=chat-form-group>
-      <%= f.text_field :body %>
-      <%= f.hidden_field :room_id, :value => @room.id %>
-      <%= f.submit "送信する" %>
-    </div>
-  <% end %>
-</div>
 </div>

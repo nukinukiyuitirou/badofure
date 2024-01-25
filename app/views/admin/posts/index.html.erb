@@ -84,6 +84,7 @@
     </script>
     </div>
         <td><%= link_to post.text,admin_post_path(post.id) %></td>
+        <td>コメント件数：<%= post.comments.count %></td>
       </tr>
       <% end %>
     </tbody>
