@@ -1,18 +1,18 @@
 <div class="container">
-  <div class='row'>"</div>
+  <div class='row'></div>
   <div class='row'>
     <div class="col-4"></div>
     <h3 class="col-6"><strong>ユーザー編集</strong></h3>
     <div class="col-2"></div>
   </div>
   <div class='row'>
-      <div class='col-3'></div>
-      <div class='col-7'>
-　　　<%= form_with model: @user, method: :patch do |f| %>
-　　　<%#= render "uesr/error_messages", resource: resource %>
-    　　<table class="">
+    <div class='col-3'></div>
+    <div class='col-7'>
+      <%= form_with model: @user, method: :patch do |f| %>
+        <%#= render "uesr/error_messages", resource: resource %>
+        <table class="">
           <tr>
-            <td>ユーザーネーム </td>
+            <td>ユーザーネーム</td>
             <td></td>
             <td><%= f.text_field :name %></td>
           </tr>
@@ -25,8 +25,8 @@
             <td>レベル</td>
             <td></td>
             <td id='level'>
-            <%= f.label :level,'レベル ' %>
-            <%= f.hidden_field :level, id:'level_star' %>
+              <%= f.label :level, 'レベル ' %>
+              <%= f.hidden_field :level, id:'level_star' %>
             </td>
           </tr>
           <tr>
@@ -40,12 +40,12 @@
             <td><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
           </tr>
           <tr>
-              <td>性別</td>
-              <td></td>
-                <td>
-                  <p><%= f.radio_button :is_sex, :true %>男性</p>
-                  <p><%= f.radio_button :is_sex, :false %>女性</p>
-                </td>
+            <td>性別</td>
+            <td></td>
+            <td>
+              <p><%= f.radio_button :is_sex, :true %>男性</p>
+              <p><%= f.radio_button :is_sex, :false %>女性</p>
+            </td>
           </tr>
           <tr>
             <td>自己紹介</td>
@@ -57,10 +57,10 @@
             <td></td>
             <td><%= f.submit " 編　集　完　了 ", class:"btn btn-success" %></td>
           </tr>
-  　　　　</table>
-  　　<% end %>
-  <!--<h3><strong>既に登録済みの方</strong></h3>-->
-  <!--<%#= render "devise/shared/links" %>からログインしてください-->
+        </table>
+      <% end %>
+      <!--<h3><strong>既に登録済みの方</strong></h3>-->
+      <!--<%#= render "devise/shared/links" %>からログインしてください-->
     </div>
     <div class='col-2'></div>
   </div>
@@ -75,7 +75,7 @@
       starOn: "<%= asset_path('star-on.png') %>",
       starOff: "<%= asset_path('star-off.png') %>",
       scoreName: 'user[level]',
-      score: <%=@user.level%>
+      score: <%= @user.level %>
     };
     raty(elem, opt);
   });

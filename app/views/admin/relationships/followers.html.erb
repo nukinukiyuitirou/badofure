@@ -16,25 +16,24 @@
         <td><%= image_tag user.get_profile_image(100,100) %></td>
         <td><%= link_to user.name, admin_user_path(user) %></td>
         <td><%= user.is_sex? ? '男性' : '女性' %></td>
-        <td>
-          <div id="level<%= user.id%>"></td>
-           <script>
-            $(document).on('turbolinks:load', function() {
-              let elem = document.querySelector('#level<%= user.id%>');
-              if (elem == null) return;
-              elem.innerHTML = "";
-              let opt = {
-                size      : 36,
-                starOff   : '<%= asset_path('star-off.png') %>',
-                starOn    : '<%= asset_path('star-on.png') %>',
-                half      : false,
-                readOnly: true,
-                score: <%= user.level %>,
-              }
-              raty(elem, opt);
-            });
-           </script>
-          </div>
+        <td><div id="level<%= user.id%>"></td>
+         <script>
+          $(document).on('turbolinks:load', function() {
+            let elem = document.querySelector('#level<%= user.id%>');
+            if (elem == null) return;
+            elem.innerHTML = "";
+            let opt = {
+              size      : 36,
+              starOff   : '<%= asset_path('star-off.png') %>',
+              starOn    : '<%= asset_path('star-on.png') %>',
+              half      : false,
+              readOnly: true,
+              score: <%= user.level %>,
+            }
+            raty(elem, opt);
+          });
+         </script>
+        </div>
         <td><%= user.region.name %></td>
       </tr>
       <% end %>

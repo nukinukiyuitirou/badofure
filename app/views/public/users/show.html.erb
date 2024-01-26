@@ -1,22 +1,22 @@
 <div class='container px-5 px-sm-0'>
   <div class="d-flex">
-  <div class='row'>
-    <div class='col-md-2'></div>
-    <div class='col-md-4' style="margin: 20px 0 0 0;">
-      <table class='table'>
-        <tr><%= image_tag @user.get_profile_image(200,200),size:"200", class: "rounded-circle d-block mx-auto" %></tr>
-      </table>
-    </div>
-    <div class='col-md-4' style="margin: 80px 0 0 0;">
-      <table class='table2'>
-        <tr>
-          <th>フォロー中</th>
-          <th><div style="margin: 0 0 0 10px;"><%= link_to @user.followings.count, user_followings_path(@user) %></div></th>
-        </tr>
-        <tr>
-          <th>フォロワー</th>
-          <th><div style="margin: 0 0 0 10px;"><%= link_to @user.followers.count, user_followers_path(@user) %></div></th>
-        </tr>
+    <div class='row'>
+      <div class='col-md-2'></div>
+      <div class='col-md-4' style="margin: 20px 0 0 0;">
+        <table class='table'>
+          <tr><%= image_tag @user.get_profile_image(200,200),size:"200", class: "rounded-circle d-block mx-auto" %></tr>
+        </table>
+      </div>
+      <div class='col-md-4' style="margin: 80px 0 0 0;">
+        <table class='table2'>
+          <tr>
+            <th>フォロー中</th>
+            <th><div style="margin: 0 0 0 10px;"><%= link_to @user.followings.count, user_followings_path(@user) %></div></th>
+          </tr>
+          <tr>
+            <th>フォロワー</th>
+            <th><div style="margin: 0 0 0 10px;"><%= link_to @user.followers.count, user_followers_path(@user) %></div></th>
+          </tr>
         </table>
         <div class="btn-toolbar">
           <div class="btn-group">
@@ -47,113 +47,114 @@
             </div>
           </div>
         </div>
-    </div>
-    <div class='col-md-2'></div>
-    <table class="table table-bordered">
-      <tr>
-        <td>名前</td>
-        <td><%= @user.name %></td>
-      </tr>
-      <tr>
-        <td>レベル</td>
-        <td>
-          <div id="level<%= @user.id%>"></div>
-        </td>
-        <script>
-          $(document).on('turbolinks:load', function() {
-            let elem = document.querySelector('#level<%= @user.id%>');
-            if (elem == null) return;
-            elem.innerHTML = "";
-            let opt = {
-              size      : 36,
-              starOff   : '<%= asset_path('star-off.png') %>',
-              starOn    : '<%= asset_path('star-on.png') %>',
-              half      : false,
-              readOnly: true,
-              score: <%= @user.level %>,
-            }
-            raty(elem, opt);
-          });
-        </script>
-      </tr>
-      <tr>
-        <td>得意なショット</td>
-      	<td><%= @user.shot %></td>
-      </tr>
-      <tr>
-        <td>性別</td>
-        <td><%= @user.is_sex == "man" ? '男性' : '女性' %></td>
-      </tr>
-      <tr>
-        <td>活動拠点</td>
-      	<td><%= @user.region.name %></td>
-      </tr>
-      <tr>
-        <td>自己紹介</td>
-      	<td><%= @user.introduction %></td>
-      </tr>
-    </table>
-    <div style="margin: 0 0 0 0;"><%= link_to "ユーザーのいいね一覧",favorites_user_path(@user) %></div>
-    <div style="margin: 0 0 0 800px;">
-      <% if current_user == @user && !@user.guest_user? %>
-        <%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %>
-        <%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %>
-      <% end %>
-    </div>
-    </div>
-    </div>
-    </div>
-      <h1><%= @user.name %>さんの過去の投稿</h1>
-      <table class="table table-striped user-show">
-        <thead>
-          <tr>
-            <th></th>
-            <th>名前</th>
-            <th>性別</th>
-            <th>レベル</th>
-            <th>投稿文</th>
-          </tr>
-        </thead>
-       <tbody>
-        <% @user.posts.each do |post| %>
-          <tr>
-            <td><%= image_tag(post.user.get_profile_image(100,100), class: "rounded-circle") %></td>
-            <td><%= post.user.name %></td>
-            <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
-            <td><div id="level-<%= post.id%>"></div></td>
-            <script>
-              $(document).on('turbolinks:load', function() {
-                let elem = document.querySelector('#level-<%= post.id%>');
-                if (elem == null) return;
-                elem.innerHTML = "";
-                let opt = {
-                  size      : 36,
-                  starOff   : '<%= asset_path('star-off.png') %>',
-                  starOn    : '<%= asset_path('star-on.png') %>',
-                  half      : false,
-                  readOnly: true,
-                  score: <%= post.level %>,
-                }
-                raty(elem, opt);
-              });
-            </script>
-            <td><%= link_to post.text,post_path(post.id) %></td>
-            <td id="favorite_buttons_<%= post.id %>">
-              <% if post.favorited_by?(current_user) %>
-                <%= link_to post_favorite_path(post), method: :delete, remote: true  do %>
-                  <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-                  <%= post.favorites.count %>いいね
-                <% end %>
-              <% else %>
-                <%= link_to post_favorite_path(post), method: :post, remote: true  do %>
-                  <i class="fas fa-heart" aria-hidden="true"></i>
-                  <%= post.favorites.count %>いいね
-                <% end %>
-              <% end %>
-            </td>
-            <td>コメント数: <%= post.comments.count %></td>
-          </tr>
-        <% end %>
-        </tbody>
+      </div>
+      <div class='col-md-2'></div>
+      <table class="table table-bordered">
+        <tr>
+          <td>名前</td>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <td>レベル</td>
+          <td>
+            <div id="level<%= @user.id%>"></div>
+          </td>
+          <script>
+            $(document).on('turbolinks:load', function() {
+              let elem = document.querySelector('#level<%= @user.id%>');
+              if (elem == null) return;
+              elem.innerHTML = "";
+              let opt = {
+                size      : 36,
+                starOff   : '<%= asset_path('star-off.png') %>',
+                starOn    : '<%= asset_path('star-on.png') %>',
+                half      : false,
+                readOnly: true,
+                score: <%= @user.level %>,
+              }
+              raty(elem, opt);
+            });
+          </script>
+        </tr>
+        <tr>
+          <td>得意なショット</td>
+        	<td><%= @user.shot %></td>
+        </tr>
+        <tr>
+          <td>性別</td>
+          <td><%= @user.is_sex == "man" ? '男性' : '女性' %></td>
+        </tr>
+        <tr>
+          <td>活動拠点</td>
+        	<td><%= @user.region.name %></td>
+        </tr>
+        <tr>
+          <td>自己紹介</td>
+        	<td><%= @user.introduction %></td>
+        </tr>
       </table>
-
+      <div style="margin: 0 0 0 0;"><%= link_to "ユーザーのいいね一覧",favorites_user_path(@user) %></div>
+      <div style="margin: 0 0 0 800px;">
+        <% if current_user == @user && !@user.guest_user? %>
+          <%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %>
+          <%= link_to "退会する", user_users_unsubscrites_path(@user),method: :patch, class:"btn btn-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<h1><%= @user.name %>さんの過去の投稿</h1>
+<table class="table table-striped user-show">
+  <thead class="text-color">
+    <tr style="background-color: #008080;">
+      <th></th>
+      <th>名前</th>
+      <th>性別</th>
+      <th>レベル</th>
+      <th>投稿文</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+　<tbody>
+  <% @user.posts.each do |post| %>
+    <tr>
+      <td><%= image_tag(post.user.get_profile_image(100,100), class: "rounded-circle") %></td>
+      <td><%= post.user.name %></td>
+      <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
+      <td><div id="level-<%= post.id%>"></div></td>
+      <script>
+        $(document).on('turbolinks:load', function() {
+          let elem = document.querySelector('#level-<%= post.id%>');
+          if (elem == null) return;
+          elem.innerHTML = "";
+          let opt = {
+            size      : 36,
+            starOff   : '<%= asset_path('star-off.png') %>',
+            starOn    : '<%= asset_path('star-on.png') %>',
+            half      : false,
+            readOnly: true,
+            score: <%= post.level %>,
+          }
+          raty(elem, opt);
+        });
+      </script>
+      <td><%= link_to post.text,post_path(post.id) %></td>
+      <td id="favorite_buttons_<%= post.id %>">
+        <% if post.favorited_by?(current_user) %>
+          <%= link_to post_favorite_path(post), method: :delete, remote: true  do %>
+            <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+            <%= post.favorites.count %>いいね
+          <% end %>
+        <% else %>
+          <%= link_to post_favorite_path(post), method: :post, remote: true  do %>
+            <i class="fas fa-heart" aria-hidden="true"></i>
+            <%= post.favorites.count %>いいね
+          <% end %>
+        <% end %>
+      </td>
+      <td>コメント数: <%= post.comments.count %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

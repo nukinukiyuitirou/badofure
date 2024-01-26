@@ -23,22 +23,22 @@
         <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
         <td><div id="level<%= post.id%>"></td>
         <script>
-    $(document).on('turbolinks:load', function() {
-      let elem = document.querySelector('#level<%= post.id%>');
-      if (elem == null) return;
-      elem.innerHTML = "";
-      let opt = {
-        size      : 36,
-        starOff   : '<%= asset_path('star-off.png') %>',
-        starOn    : '<%= asset_path('star-on.png') %>',
-        half      : false,
-        readOnly: true,
-        score: <%= post.level %>,
-      }
-      raty(elem, opt);
-    });
-    </script>
-    </div>
+          $(document).on('turbolinks:load', function() {
+            let elem = document.querySelector('#level<%= post.id%>');
+            if (elem == null) return;
+            elem.innerHTML = "";
+            let opt = {
+              size      : 36,
+              starOff   : '<%= asset_path('star-off.png') %>',
+              starOn    : '<%= asset_path('star-on.png') %>',
+              half      : false,
+              readOnly: true,
+              score: <%= post.level %>,
+            }
+            raty(elem, opt);
+          });
+        </script>
+        </div>
         <td><%= link_to post.text,post_path(post.id) %></td>
 　　    <td id="favorite_buttons_<%= post.id %>">
 　　      <%= render "public/favorites/favorites", post: post %>
@@ -49,10 +49,10 @@
       </tr>
       <% end %>
     </tbody>
-    </div>
-  </table>
+  </div>
+</table>
 
-  <script>
+<script>
   $(document).on('turbolinks:load', function() {
     let elem = document.querySelector('#level');
     if (elem == null) return;

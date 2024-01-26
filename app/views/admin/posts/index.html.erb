@@ -1,14 +1,15 @@
 <h1>投稿一覧</h1>
 <div class="container">
   <div class='row'>
-   <div class="col-5"></div>
-   <div class="col-2"><h3>検索</h3></div>
-   <div class="col-5"></div>
+    <div class="col-5"></div>
+    <div class="col-2"><h3>検索</h3></div>
+    <div class="col-5"></div>
   </div>
+  
   <div class="row">
     <div class="col-3"></div>
     <div class="col-6">
-    　<div class="d-flex">
+      <div class="d-flex">
         <div style="margin: 0 50px 0 50px;">性別</div>
         <div style="margin: 0 45px 0 62px;">レベル</div>
         <div style="margin: 0 10px 0 45px;">場所</div>
@@ -16,6 +17,7 @@
     </div>
     <div class="col-3"></div>
   </div>
+  
   <%= form_with url: admin_posts_path, local: true, method: :get do |f| %>
     <div class='row'>
       <div class="col-3"></div>
@@ -38,16 +40,17 @@
       <div class="col-5"></div>
       <div class="col-2">
         <div class="d-flex">
-          <div style="margin: 10px 0 10px 5px;"><%= f.submit "検索", class: "btn-sm btn-primary" do %>
-            <i class="fa-solid fa-magnifying-glass"></i>
-          　<% end %>
+          <div style="margin: 10px 0 10px 5px;">
+            <%= f.submit "検索", class: "btn-sm btn-primary" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            <% end %>
           </div>
         </div>
       </div>
-  <div class="col-5"></div>
-</div>
-</div>
-<% end %>
+      <div class="col-5"></div>
+    </div>
+  <% end %>
+  
   <table class="table table-striped">
     <thead>
       <tr>
@@ -61,46 +64,48 @@
     </thead>
     <tbody>
       <% @posts.each do |post| %>
-      <tr>
-        <td><%= link_to image_tag(post.user.get_profile_image(100,100)) ,admin_user_path(post.user.id) %></td>
-        <td><%= link_to post.user.name,admin_user_path(post.user.id) %></td>
-        <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
-        <td><div id="level<%= post.id%>"></td>
-        <script>
-    $(document).on('turbolinks:load', function() {
-      let elem = document.querySelector('#level<%= post.id%>');
-      if (elem == null) return;
-      elem.innerHTML = "";
-      let opt = {
-        size      : 36,
-        starOff   : '<%= asset_path('star-off.png') %>',
-        starOn    : '<%= asset_path('star-on.png') %>',
-        half      : false,
-        readOnly: true,
-        score: <%= post.level %>,
-      }
-      raty(elem, opt);
-    });
-    </script>
-    </div>
-        <td><%= link_to post.text,admin_post_path(post.id) %></td>
-        <td>コメント件数：<%= post.comments.count %></td>
-      </tr>
+        <tr>
+          <td><%= link_to image_tag(post.user.get_profile_image(100,100)) ,admin_user_path(post.user.id) %></td>
+          <td><%= link_to post.user.name,admin_user_path(post.user.id) %></td>
+          <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
+          <td><div id="level<%= post.id%>"></td>
+          <script>
+            $(document).on('turbolinks:load', function() {
+              let elem = document.querySelector('#level<%= post.id%>');
+              if (elem == null) return;
+              elem.innerHTML = "";
+              let opt = {
+                size      : 36,
+                starOff   : '<%= asset_path('star-off.png') %>',
+                starOn    : '<%= asset_path('star-on.png') %>',
+                half      : false,
+                readOnly: true,
+                score: <%= post.level %>,
+              }
+              raty(elem, opt);
+            });
+          </script>
+          </div>
+          <td><%= link_to post.text,admin_post_path(post.id) %></td>
+          <td>コメント件数：<%= post.comments.count %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
+  
   <%= paginate @posts %>
+  
   <script>
-  $(document).on('turbolinks:load', function() {
-    let elem = document.querySelector('#level');
-    if (elem == null) return;
-    elem.innerHTML = "";
-    let opt = {
-      starOn: "<%= asset_path('star-on.png') %>",
-      starOff: "<%= asset_path('star-off.png') %>",
-      scoreName: 'level',
-    };
-    raty(elem, opt);
-  });
-</script>
-
+    $(document).on('turbolinks:load', function() {
+      let elem = document.querySelector('#level');
+      if (elem == null) return;
+      elem.innerHTML = "";
+      let opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        scoreName: 'level',
+      };
+      raty(elem, opt);
+    });
+  </script>
+</div>
