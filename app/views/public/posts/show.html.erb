@@ -1,93 +1,94 @@
 <div style="text-align:center;">
-<h1 style="margin: 10px 0 0 0;">投稿詳細</h1>
+  <h1 style="margin: 10px 0 0 0;">投稿詳細</h1>
 </div>
- <div class=container>
-  <div class=row>
-    <div class=col-1></div>
-    <div class=col-10>
-      <div  style="margin: 0 0 0 780px;">
+
+<div class="container">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div style="margin: 0 0 0 780px;">
         <% if @post.user == current_user %>
-          <%= link_to "編集",edit_post_path(@post.id),class: "btn btn-success" %>
-          <%= link_to "削除", post_path(@post.id), method: :delete,class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+          <%= link_to "編集", edit_post_path(@post.id), class: "btn btn-success" %>
+          <%= link_to "削除", post_path(@post.id), method: :delete, class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
         <% end %>
       </div>
+
       <table class="table table-bordered" style="margin: 10px 0 0 0;">
-          <tr>
-            <td>投稿者</td>
-            <td><%=link_to @post.user.name,user_path(@post.user) %></td>
-          </tr>
-          <tr>
-            <td>性別</td>
-            <td><%= @post.user.is_sex == "man" ? '男性' : '女性' %></td>
-          </tr>
-          <tr>
-            <td>求めるレベル</td>
-            <td id="level<%= @post.id%>"></td>
-            <script>
-                $(document).on('turbolinks:load', function() {
-                  let elem = document.querySelector('#level<%= @post.id%>');
-                  if (elem == null) return;
-                  elem.innerHTML = "";
-                  let opt = {
-                    size      : 36,
-                    starOff   : '<%= asset_path('star-off.png') %>',
-                    starOn    : '<%= asset_path('star-on.png') %>',
-                    half      : false,
-                    readOnly: true,
-                    score: <%= @post.level %>,
-                  }
-                  raty(elem, opt);
-                });
-              </script>
-          </tr>
-          <tr>
-            <td>地域</td>
-            <td><%= @post.region.name  %></td>
-          </tr>
-          <tr>
-            <td>詳細</td>
-            <td><%= @post.text %></td>
-          </tr>
-          <tr>
-            <td>投稿日時</td>
-            <td><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></td>
-          </tr>
-          <tr>
-            <td>更新日時</td>
-            <td><%=@post.updated_at.strftime('%Y/%m/%d %H:%M')%></td>
-          </tr>
+        <tr>
+          <td>投稿者</td>
+          <td><%= link_to @post.user.name, user_path(@post.user) %></td>
+        </tr>
+        <tr>
+          <td>性別</td>
+          <td><%= @post.user.is_sex == "man" ? '男性' : '女性' %></td>
+        </tr>
+        <tr>
+          <td>求めるレベル</td>
+          <td id="level<%= @post.id %>"></td>
+          <script>
+            $(document).on('turbolinks:load', function() {
+              let elem = document.querySelector('#level<%= @post.id %>');
+              if (elem == null) return;
+              elem.innerHTML = "";
+              let opt = {
+                size: 36,
+                starOff: '<%= asset_path('star-off.png') %>',
+                starOn: '<%= asset_path('star-on.png') %>',
+                half: false,
+                readOnly: true,
+                score: <%= @post.level %>,
+              }
+              raty(elem, opt);
+            });
+          </script>
+        </tr>
+        <tr>
+          <td>地域</td>
+          <td><%= @post.region.name %></td>
+        </tr>
+        <tr>
+          <td>詳細</td>
+          <td><%= @post.text %></td>
+        </tr>
+        <tr>
+          <td>投稿日時</td>
+          <td><%= @post.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+        </tr>
+        <tr>
+          <td>更新日時</td>
+          <td><%= @post.updated_at.strftime('%Y/%m/%d %H:%M') %></td>
+        </tr>
       </table>
+
       <div style="margin: 10px 0 20px 800px;">
         <div id="favorite_buttons_<%= @post.id %>">
-        <% if @post.favorited_by?(current_user) %>
-          <%= link_to post_favorite_path(@post), method: :delete, remote: true do %>
-            <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-            <%= @post.favorites.count %> いいね
+          <% if @post.favorited_by?(current_user) %>
+            <%= link_to post_favorite_path(@post), method: :delete, remote: true do %>
+              <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+              <%= @post.favorites.count %> いいね
+            <% end %>
+          <% else %>
+            <%= link_to post_favorite_path(@post), method: :post, remote: true do %>
+              <i class="fas fa-heart" aria-hidden="true"></i>
+              <%= @post.favorites.count %> いいね
+            <% end %>
           <% end %>
-        <% else %>
-          <%= link_to post_favorite_path(@post), method: :post, remote: true do %>
-            <i class="fas fa-heart" aria-hidden="true"></i>
-            <%= @post.favorites.count %> いいね
-          <% end %>
-        <% end %>
         </div>
       </div>
-      </div>
-      <div class=col-1></div>
-      </div>
-      <div class=row>
-       <div class=col-1></div>
-        <div class=col-5>
-          <div id="comment_index">
-            <%= render "public/comments/index", post: @post %>
-          </div>
-        </div>
-        <div class=col-5>
-          <%= render "public/comments/form", post: @post, comment: @comment %>
-        </div>
-        <div class=col-1></div>
-      </div>
+    </div>
+    <div class="col-1"></div>
   </div>
 
-
-
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-5">
+      <div id="comment_index">
+        <%= render "public/comments/index", post: @post %>
+      </div>
+    </div>
+    <div class="col-5">
+      <%= render "public/comments/form", post: @post, comment: @comment %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>

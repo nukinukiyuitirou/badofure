@@ -1,49 +1,50 @@
 <div class="top-img position-relative">
-　<div class="top-img-text">
-　  <div class="container">
-    <div class="text">
-  <div class="row">
-     <div class="col-3" ></div>
-     <div class="col-6">
-     <center>
-      <div style="font-size: 60px;">
-      <h2>バドフレ！！</h2>
-      </div>
-     </center>
-  </div>
-  <div class="col-3" ></div>
-  </div>
-  <div class="row">
-        <div class="col-1" ></div>
-          <div class="col-10">
+  <div class="top-img-text">
+    <div class="container">
+      <div class="text">
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-6">
             <center>
-            <div style="font-size: 22px;">
-            <p>新たな仲間ここで見つけませんか？</br>
-            バドフレで最高のバドライフを！！</p>
-            </div>
+              <div style="font-size: 60px;">
+                <h2>バドフレ！！</h2>
+              </div>
             </center>
           </div>
-        <div class="col-1" ></div>
-  </div>
+          <div class="col-3"></div>
+        </div>
 
-  <div class="row">
-    <div class="col-1" ></div>
-      <div class="col-10">
-        <center>
-          <%= link_to  new_user_session_path, class: "btn btn-primary" do %>
-           <i class="fa-solid fa-sign-in-alt"></i>
-           ログイン
-          <% end %>
-          <%= link_to  new_user_registration_path, class: "btn btn-primary" do %>
-           <i class="fa-solid fa-user-plus"></i>
-           新規登録
-          <% end %>
-          <%= link_to 'ゲストログイン', users_guest_sign_in_path, class: "btn btn-secondary", method: :post %>
-        </center>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <center>
+              <div style="font-size: 22px;">
+                <p>新たな仲間ここで見つけませんか？</br>
+                バドフレで最高のバドライフを！！</p>
+              </div>
+            </center>
+          </div>
+          <div class="col-1"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <center>
+              <%= link_to new_user_session_path, class: "btn btn-primary" do %>
+                <i class="fa-solid fa-sign-in-alt"></i>
+                ログイン
+              <% end %>
+              <%= link_to new_user_registration_path, class: "btn btn-primary" do %>
+                <i class="fa-solid fa-user-plus"></i>
+                新規登録
+              <% end %>
+              <%= link_to 'ゲストログイン', users_guest_sign_in_path, class: "btn btn-secondary", method: :post %>
+            </center>
+          </div>
+          <div class="col-1"></div>
+        </div>
       </div>
-      <div class="col-1" ></div>
-   </div>
-   </div>
+    </div>
   </div>
-　</div>
 </div>

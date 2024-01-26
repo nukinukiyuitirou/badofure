@@ -1,113 +1,113 @@
 <div style="text-align:center;">
-<h1 style="margin: 10px 0 0 0;">バドフレ一覧</h1>
-<div class="container">
-  <div class='row'>
-   <div class="offset-5 col-2"><h3 style="margin: 50px 0 0 0;">検索</h3></div>
-  </div>
-  <div class="row">
-    <div class="offset-3 col-6">
-    　<div class="d-flex">
-        <div style="margin: 0 50px 0 20px;">名前</div>
-        <div style="margin: 0 45px 0 80px;">性別</div>
-        <div style="margin: 0 10px 0 70px;">レベル</div>
-        <div style="margin: 0 10px 0 70px;">場所</div>
+  <h1 style="margin: 10px 0 0 0;">バドフレ一覧</h1>
+  <div class="container">
+    <div class='row'>
+      <div class="offset-5 col-2"><h3 style="margin: 50px 0 0 0;">検索</h3></div>
+    </div>
+    <div class="row">
+      <div class="offset-3 col-6">
+        <div class="d-flex">
+          <div style="margin: 0 50px 0 20px;">名前</div>
+          <div style="margin: 0 45px 0 80px;">性別</div>
+          <div style="margin: 0 10px 0 70px;">レベル</div>
+          <div style="margin: 0 10px 0 70px;">場所</div>
+        </div>
       </div>
     </div>
-  </div>
-  <%= form_with url: users_path, local: true, method: :get do |f| %>
-  <div class='row'>
-  <div class="offset-1 col-10">
-
-  　<div class="d-flex">
-  　  　　   <div style="margin: 0 0 0 80px;"><%= f.text_field :name, placeholder: "太郎", class: "search_input" %></div>
-          <div style="margin: 0 25px 0 10px;"><%= f.radio_button :is_sex, "man" %>男性</div>
-          <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
-          <div id="level" class="mx-3">
-            <%= f.label :level,'レベル ' %>
-            <%= f.hidden_field :level, id:'level_star' %>
+    <%= form_with url: users_path, local: true, method: :get do |f| %>
+      <div class='row'>
+        <div class="offset-1 col-10">
+          <div class="d-flex">
+            <div style="margin: 0 0 0 135px;"><%= f.text_field :name, placeholder: "太郎", class: "search_input" %></div>
+            <div style="margin: 0 25px 0 10px;"><%= f.radio_button :is_sex, "man" %>男性</div>
+            <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
+            <div id="level" class="mx-3">
+              <%= f.label :level,'レベル ' %>
+              <%= f.hidden_field :level, id:'level_star' %>
+            </div>
+            <div>
+              <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+            </div>
           </div>
-          <div>
-            <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
-          </div>
-    </div>
-  </div>
-</div>
-<div class='row'>
-  <div class="offset-5 col-2">
-    <div class="d-flex">
-      <div style="margin: 10px 0 20px 65px;"><%= button_tag type: "submit", class: "btn btn-default" do %>
-        <i class="fa-solid fa-magnifying-glass"></i>
-      <% end %>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-  </div>
-  <% end %>
-  <table class="table table-striped user-index">
-    <thead class="text-color">
-      <tr style="background-color: #008080;">
+      <div class='row'>
+        <div class="offset-5 col-2">
+          <div class="d-flex">
+            <div style="margin: 10px 0 20px 65px;">
+              <%= button_tag type: "submit", class: "btn btn-default" do %>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <table class="table table-striped user-index">
+      <thead class="text-color">
+        <tr style="background-color: #008080;">
           <th></th>
           <th>名前</th>
           <th>性別</th>
           <th>レベル</th>
           <th>地域</th>
           <th>フォロー</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <% if user.is_active %>
-      <tr>
-        <td><%= image_tag user.get_profile_image(100,100), class: "rounded-circle d-block mx-auto" %></td>
-        <td><%= link_to user.name, user_path(user) %></td>
-        <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
-        <td>
-          <div id="level<%= user.id%>"></td>
-           <script>
-            $(document).on('turbolinks:load', function() {
-              let elem = document.querySelector('#level<%= user.id%>');
-              if (elem == null) return;
-              elem.innerHTML = "";
-              let opt = {
-                size      : 36,
-                starOff   : '<%= asset_path('star-off.png') %>',
-                starOn    : '<%= asset_path('star-on.png') %>',
-                half      : false,
-                readOnly: true,
-                score: <%= user.level %>,
-              }
-              raty(elem, opt);
-            });
-           </script>
-          </div>
-        <td><%= user.region.name %></td>
-          <% if current_user != user %>
-            <% if current_user.following?(user) %>
-        <td><%= link_to "フォロー外す", user_relationship_path(user.id), method: :delete, class: "btn btn-danger" %></td>
-            <% else %>
-        <td><%= link_to "フォローする", user_relationship_path(user.id), method: :post, class: "btn btn-success" %></td>
-            <% end %>
-          <% else %>
-            <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <% if user.is_active %>
+            <tr>
+              <td><%= image_tag user.get_profile_image(100,100), class: "rounded-circle d-block mx-auto" %></td>
+              <td><%= link_to user.name, user_path(user) %></td>
+              <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
+              <td>
+                <div id="level<%= user.id%>"></div>
+                <script>
+                  $(document).on('turbolinks:load', function() {
+                    let elem = document.querySelector('#level<%= user.id%>');
+                    if (elem == null) return;
+                    elem.innerHTML = "";
+                    let opt = {
+                      size      : 36,
+                      starOff   : '<%= asset_path('star-off.png') %>',
+                      starOn    : '<%= asset_path('star-on.png') %>',
+                      half      : false,
+                      readOnly: true,
+                      score: <%= user.level %>,
+                    }
+                    raty(elem, opt);
+                  });
+                </script>
+              </td>
+              <td><%= user.region.name %></td>
+              <% if current_user != user %>
+                <% if current_user.following?(user) %>
+                  <td><%= link_to "フォロー外す", user_relationship_path(user.id), method: :delete, class: "btn btn-danger" %></td>
+                <% else %>
+                  <td><%= link_to "フォローする", user_relationship_path(user.id), method: :post, class: "btn btn-success" %></td>
+                <% end %>
+              <% else %>
+                <td></td>
+              <% end %>
+            </tr>
           <% end %>
-      </tr>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="pagination"><%= paginate @users %></div>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination"><%= paginate @users %></div>
   <script>
-  $(document).on('turbolinks:load', function() {
-    let elem = document.querySelector('#level');
-    if (elem == null) return;
-    elem.innerHTML = "";
-    let opt = {
-      starOn: "<%= asset_path('star-on.png') %>",
-      starOff: "<%= asset_path('star-off.png') %>",
-      scoreName: 'level',
-    };
-    raty(elem, opt);
-  });
-</script>
+    $(document).on('turbolinks:load', function() {
+      let elem = document.querySelector('#level');
+      if (elem == null) return;
+      elem.innerHTML = "";
+      let opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        scoreName: 'level',
+      };
+      raty(elem, opt);
+    });
+  </script>
+</div>

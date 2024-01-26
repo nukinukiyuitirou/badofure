@@ -1,117 +1,121 @@
 <div style="text-align:center;">
-<h1 style="margin: 10px 0 0 0;">投稿一覧</h1>
-<div class="container">
-  <div class='row'>
-   <div class="col-5"></div>
-   <div class="col-2"><h3 style="margin: 50px 0 0 0;">検索</h3></div>
-   <div class="col-5"></div>
-  </div>
-  <div class="row">
-    <div class="col-3"></div>
-    <div class="col-6">
-    　<div class="d-flex">
-        <div style="margin: 0 50px 0 105px;">性別</div>
-        <div style="margin: 0 45px 0 62px;">レベル</div>
-        <div style="margin: 0 10px 0 45px;">場所</div>
-      </div>
+  <h1 style="margin: 10px 0 0 0;">投稿一覧</h1>
+  <div class="container">
+    <div class='row'>
+      <div class="col-5"></div>
+      <div class="col-2"><h3 style="margin: 50px 0 0 0;">検索</h3></div>
+      <div class="col-5"></div>
     </div>
-    <div class="col-3"></div>
-  </div>
-  <%= form_with url:posts_path, local: true, method: :get do |f| %>
-  <div class='row'>
-    <div class="col-3"></div>
-    <div class="col-8">
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
         <div class="d-flex">
-          <div style="margin: 0 25px 0 65px;"><%= f.radio_button :is_sex, "man" %>男性</div>
-          <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
-          <div id="level" class="mx-3">
-            <%= f.label :level,'レベル ' %>
-            <%= f.hidden_field :level, id:'level_star' %>
-          </div>
-          <div>
-            <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+          <div style="margin: 0 50px 0 105px;">性別</div>
+          <div style="margin: 0 45px 0 62px;">レベル</div>
+          <div style="margin: 0 10px 0 45px;">場所</div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+    <%= form_with url: posts_path, local: true, method: :get do |f| %>
+      <div class='row'>
+        <div class="col-3"></div>
+        <div class="col-8">
+          <div class="d-flex">
+            <div style="margin: 0 25px 0 65px;"><%= f.radio_button :is_sex, "man" %>男性</div>
+            <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
+            <div id="level" class="mx-3">
+              <%= f.label :level, 'レベル ' %>
+              <%= f.hidden_field :level, id:'level_star' %>
+            </div>
+            <div>
+              <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+            </div>
           </div>
         </div>
-  </div>
-  <div class="col-1"></div>
-</div>
-<div class='row'>
-  <div class="col-5"></div>
-  <div class="col-2">
-    <div class="d-flex">
-      <div style="margin: 10px 0 20px 65px;"><%= button_tag type: "submit", class: "btn btn-default" do %>
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <% end %>
+        <div class="col-1"></div>
       </div>
-    </div>
-  </div>
-  <div class="col-5"></div>
-</div>
-</div>
-<% end %>
-<% @posts.each do |post| %>
-<div class="card card-post">
-  <div class="card-body">
-    <h5 class="card-title">
-      <%= link_to post_path(post) do %>
-        <%= post.user.name %>
-      <% end %>
-    </h5>
-  </div>
-  <ul class="list-group-flush" style="padding-left: 0px;">
-    <li class="post-detail-group">
-      <div class="d-flex">
-        <div class="post-detail1">性別</div>
-        <div class="post-detail2"><%= post.user.is_sex == "man" ? '男性' : '女性' %></div>
+      <div class='row'>
+        <div class="col-5"></div>
+        <div class="col-2">
+          <div class="d-flex">
+            <div style="margin: 10px 0 20px 65px;">
+              <%= button_tag type: "submit", class: "btn btn-default" do %>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-5"></div>
       </div>
-    </li>
-    <li class="post-detail-group">
-      <div class="d-flex">
-        <div class="post-detail1">レベル</div>
-        <div class="post-detail2"><div id="level<%= post.id%>"></div></div>
-      </div>
-      <script>
-        $(document).on('turbolinks:load', function() {
-          let elem = document.querySelector('#level<%= post.id%>');
-          if (elem == null) return;
-          elem.innerHTML = "";
-          let opt = {
-            size      : 36,
-            starOff   : '<%= asset_path('star-off.png') %>',
-            starOn    : '<%= asset_path('star-on.png') %>',
-            half      : false,
-            readOnly: true,
-            score: <%= post.level %>,
-          }
-          raty(elem, opt);
-        });
-      </script>
-    </li>
-    <li class="post-detail-group">
-      <div class="d-flex">
-        <div class="post-detail1">詳細</div>
-        <div class="post-detail2"><%= link_to post.text,post_path(post.id) %></div>
-      </div>
-    </li>
-  </ul>
-  <div class="card-body">
-    <div id="favorite_buttons_<%= post.id %>" class="text-right"><%= render "public/favorites/favorites", post: post %></div>
-    <div id="comment_counter" class="text-right"><%= render "public/comments/counter", post: post %></div>
+    <% end %>
   </div>
+    <% @posts.each do |post| %>
+      <div class="card card-post">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to post_path(post) do %>
+              <%= post.user.name %>
+            <% end %>
+          </h5>
+        </div>
+        <ul class="list-group-flush" style="padding-left: 0px;">
+          <li class="post-detail-group">
+            <div class="d-flex">
+              <div class="post-detail1">性別</div>
+              <div class="post-detail2"><%= post.user.is_sex == "man" ? '男性' : '女性' %></div>
+            </div>
+          </li>
+          <li class="post-detail-group">
+            <div class="d-flex">
+              <div class="post-detail1">レベル</div>
+              <div class="post-detail2">
+                <div id="level<%= post.id%>"></div>
+              </div>
+            </div>
+            <script>
+              $(document).on('turbolinks:load', function() {
+                let elem = document.querySelector('#level<%= post.id%>');
+                if (elem == null) return;
+                elem.innerHTML = "";
+                let opt = {
+                  size      : 36,
+                  starOff   : '<%= asset_path('star-off.png') %>',
+                  starOn    : '<%= asset_path('star-on.png') %>',
+                  half      : false,
+                  readOnly: true,
+                  score: <%= post.level %>,
+                }
+                raty(elem, opt);
+              });
+            </script>
+          </li>
+          <li class="post-detail-group">
+            <div class="d-flex">
+              <div class="post-detail1">詳細</div>
+              <div class="post-detail2"><%= link_to post.text, post_path(post.id) %></div>
+            </div>
+          </li>
+        </ul>
+        <div class="card-body">
+          <div id="favorite_buttons_<%= post.id %>" class="text-right"><%= render "public/favorites/favorites", post: post %></div>
+          <div id="comment_counter" class="text-right"><%= render "public/comments/counter", post: post %></div>
+        </div>
+      </div>
+    <% end %>
+
+  <div class="pagination"><%= paginate @posts %></div>
+  <script>
+    $(document).on('turbolinks:load', function() {
+      let elem = document.querySelector('#level');
+      if (elem == null) return;
+      elem.innerHTML = "";
+      let opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        scoreName: 'level',
+      };
+      raty(elem, opt);
+    });
+  </script>
 </div>
-<% end %>
-</div>
-<div class="pagination"><%= paginate @posts %></div>
-<script>
-  $(document).on('turbolinks:load', function() {
-    let elem = document.querySelector('#level');
-    if (elem == null) return;
-    elem.innerHTML = "";
-    let opt = {
-      starOn: "<%= asset_path('star-on.png') %>",
-      starOff: "<%= asset_path('star-off.png') %>",
-      scoreName: 'level',
-    };
-    raty(elem, opt);
-  });
-</script>

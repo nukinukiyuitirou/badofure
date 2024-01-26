@@ -1,109 +1,115 @@
-<h1>バドフレ一覧</h1>
-<div class="container">
-  <div class='row'>
-   <div class="col-5"></div>
-   <div class="col-2"><h3>検索</h3></div>
-   <div class="col-5"></div>
-  </div>
-  <div class="row">
-    <div class="col-3"></div>
-    <div class="col-6">
-    　<div class="d-flex">
-        <div style="margin: 0 50px 0 0;">名前</div>
-        <div style="margin: 0 45px 0 80px;">性別</div>
-        <div style="margin: 0 10px 0 70px;">レベル</div>
-        <div style="margin: 0 10px 0 70px;">場所</div>
-      </div>
-    </div>
-    <div class="col-3"></div>
-  </div>
-  <%= form_with url: admin_users_path, local: true, method: :get do |f| %>
-  <div class='row'>
-  <div class="col-1"></div>
-  <div class="col-10">
-  　<div class="d-flex">
-  　  　　   <div style="margin: 0 0 0 60px;"><%= f.text_field :name, placeholder: "太郎", class: "search_input" %></div>
-          <div style="margin: 0 25px 0 10px;"><%= f.radio_button :is_sex, "man" %>男性</div>
-          <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
-          <div id="level" class="mx-3">
-            <%= f.label :level,'レベル ' %>
-            <%= f.hidden_field :level, id:'level_star' %>
-          </div>
-          <div>
-            <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
-          </div>
-        </div>
-      </div>
-      <div class="col-1"></div>
-    </div>
+<div style="text-align:center;">
+  <h1>バドフレ一覧</h1>
+  <div class="container">
     <div class='row'>
       <div class="col-5"></div>
-      <div class="col-2">
+      <div class="col-2"><h3 style="margin: 50px 0 0 0;">検索</h3></div>
+      <div class="col-5"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
         <div class="d-flex">
-          <div style="margin: 10px 0 10px 5px;"><%= f.submit "検索", class: "btn-sm btn-primary" do %>
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <% end %>
-          </div>
+          <div style="margin: 0 50px 0 0;">名前</div>
+          <div style="margin: 0 45px 0 80px;">性別</div>
+          <div style="margin: 0 10px 0 70px;">レベル</div>
+          <div style="margin: 0 10px 0 70px;">場所</div>
         </div>
       </div>
-  <div class="col-5"></div>
-  </div>
-  </div>
-  <% end %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th></th>
-        <th>名前</th>
-        <th>性別</th>
-        <th>レベル</th>
-        <th>地域</th>
-        <th>ステータス</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-      <tr>
-        <td><%= image_tag user.get_profile_image(100,100) %></td>
-        <td><%= link_to user.name, admin_user_path(user) %></td>
-        <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
-        <td>
-          <div id="level<%= user.id%>"></td>
-           <script>
-            $(document).on('turbolinks:load', function() {
-              let elem = document.querySelector('#level<%= user.id%>');
-              if (elem == null) return;
-              elem.innerHTML = "";
-              let opt = {
-                size      : 36,
-                starOff   : '<%= asset_path('star-off.png') %>',
-                starOn    : '<%= asset_path('star-on.png') %>',
-                half      : false,
-                readOnly: true,
-                score: <%= user.level %>,
-              }
-              raty(elem, opt);
-            });
-           </script>
+      <div class="col-3"></div>
+    </div>
+
+    <%= form_with url: admin_users_path, local: true, method: :get do |f| %>
+      <div class='row'>
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="d-flex">
+            <div style="margin: 0 0 0 135px;"><%= f.text_field :name, placeholder: "太郎", class: "search_input" %></div>
+            <div style="margin: 0 25px 0 10px;"><%= f.radio_button :is_sex, "man" %>男性</div>
+            <div style="margin: 0 10px 0 0;"><%= f.radio_button :is_sex, "woman" %>女性</div>
+            <div id="level" class="mx-3">
+              <%= f.label :level, 'レベル ' %>
+              <%= f.hidden_field :level, id:'level_star' %>
+            </div>
+            <div>
+              <%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+            </div>
           </div>
-        <td><%= user.region.name %></td>
-        <td><%= user.is_active? ? '有効' : '退会' %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= paginate @users %>
-  <script>
-  $(document).on('turbolinks:load', function() {
-    let elem = document.querySelector('#level');
-    if (elem == null) return;
-    elem.innerHTML = "";
-    let opt = {
-      starOn: "<%= asset_path('star-on.png') %>",
-      starOff: "<%= asset_path('star-off.png') %>",
-      scoreName: 'level',
-    };
-    raty(elem, opt);
-  });
-</script>
+        </div>
+        <div class="col-1"></div>
+      </div>
+
+      <div class='row'>
+        <div class="col-5"></div>
+        <div class="col-2">
+          <div class="d-flex">
+            <div style="margin: 10px 0 10px 60px;"><%= f.submit "検索", class: "btn-sm btn-primary" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            <% end %></div>
+          </div>
+        </div>
+        <div class="col-5"></div>
+      </div>
+    <% end %>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>名前</th>
+          <th>性別</th>
+          <th>レベル</th>
+          <th>地域</th>
+          <th>ステータス</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= image_tag user.get_profile_image(100,100) %></td>
+            <td><%= link_to user.name, admin_user_path(user) %></td>
+            <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
+            <td>
+              <div id="level<%= user.id%>"></div>
+              <script>
+                $(document).on('turbolinks:load', function() {
+                  let elem = document.querySelector('#level<%= user.id%>');
+                  if (elem == null) return;
+                  elem.innerHTML = "";
+                  let opt = {
+                    size      : 36,
+                    starOff   : '<%= asset_path('star-off.png') %>',
+                    starOn    : '<%= asset_path('star-on.png') %>',
+                    half      : false,
+                    readOnly: true,
+                    score: <%= user.level %>,
+                  }
+                  raty(elem, opt);
+                });
+              </script>
+            </td>
+            <td><%= user.region.name %></td>
+            <td><%= user.is_active? ? '有効' : '退会' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @users %>
+
+    <script>
+      $(document).on('turbolinks:load', function() {
+        let elem = document.querySelector('#level');
+        if (elem == null) return;
+        elem.innerHTML = "";
+        let opt = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          scoreName: 'level',
+        };
+        raty(elem, opt);
+      });
+    </script>
+  </div>
+</div>
