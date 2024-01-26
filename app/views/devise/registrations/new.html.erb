@@ -1,86 +1,85 @@
+<div class="contact">
 <div class="container">
   <div class="row">
     <div class="col-lg-4"></div>
-    <h2 class="col-lg-4">新規会員登録</h2>
+    <h2 class="col-lg-4" style="margin: 10px 0 20px 90px;">新規会員登録</h2>
     <div class="col-lg-4"></div>
   </div>
   <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-7">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
       <%= form_with model: @user, url:  user_registration_path do |f| %>
         <%= render "public/shared/error_messages", resource: resource %>
-        <table class="">
+        <table class="table table-bordered">
           <tr>
-            <td>ユーザーネーム </td>
+            <th class="contact-item">ユーザーネーム </th>
             <td></td>
-            <td><%= f.text_field :name %></td>
+            <td class="contact-body"><%= f.text_field :name %></td>
           </tr>
           <tr>
-            <td>メールアドレス</td>
+            <th class="contact-item">メールアドレス</th>
             <td></td>
-            <td><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
+            <td class="contact-body"><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
           </tr>
           <tr>
-            <td>プロフィール画像</td>
+            <th class="contact-item">プロフィール画像</th>
             <td></td>
-            <td><%= f.file_field :profile_image, accept: "image/:" %></td>
+            <td class="contact-body"><%= f.file_field :profile_image, accept: "image/:" %></td>
           </tr>
           <tr>
-            <td>レベル</td>
+            <th class="contact-item">レベル</th>
             <td></td>
-            <td id='level'>
+            <td id='level' class="contact-body">
             <%= f.label :level,'レベル ' %>
             <%= f.hidden_field :level, id:'level_star' %>
             </td>
           </tr>
           <tr>
-            <td>好き、得意なショット</td>
+            <th class="contact-item">好き、得意なショット</th>
             <td></td>
-            <td><%= f.text_field :shot %></td>
+            <td class="contact-body"><%= f.text_field :shot %></td>
           </tr>
           <tr>
-            <td>地域</td>
+            <th class="contact-item">地域</th>
             <td></td>
-            <td><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
+            <td class="contact-body"><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
           </tr>
           <tr>
-            <td>性別</td>
+            <th class="contact-item">性別</th>
             <td></td>
-            <td>
+            <td class="contact-body">
               <%= f.radio_button :is_sex, "man" %>男性
               <%= f.radio_button :is_sex, "woman" %>女性
             </td>
           </tr>
           <tr>
-            <td>自己紹介</td>
+            <th class="contact-item">自己紹介</th>
             <td></td>
-            <td><%= f.text_area :introduction, rows:'5', placeholder: "自己紹介文", class: "w-100", id: "comment_textarea" %></td>
+            <td class="contact-body"><%= f.text_area :introduction, rows:'5', placeholder: "自己紹介文", class: "w-100", id: "comment_textarea" %></td>
           </tr>
           <tr>
-            <td>パスワード（6文字以上)</td>
+            <th class="contact-item">パスワード（6文字以上)</th>
             <td></td>
-            <td>  <% if @minimum_password_length %>
+            <td class="contact-body">  <% if @minimum_password_length %>
                   <% end %>
                   <%= f.password_field :password, autocomplete: "new-password" %>
             </td>
           </tr>
           <tr>
-            <td>パスワード（確認用）</td>
+            <th class="contact-item">パスワード（確認用）</th>
             <td></td>
-            <td><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td><%= f.submit " 新 規 登 録 ", class:"btn btn-success" %></td>
+            <td class="contact-body"><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
           </tr>
         </table>
+        <div style="margin: 10px 0 20px 340px;"><%= f.submit " 新 規 登 録 ", class:"btn btn-success" %></div>
+
       <% end %>
       <h3><strong>既に登録済みの方</strong></h3>
       <%= render "devise/shared/links" %>からログインしてください
     </div>
     <div class="col-lg-2"></div>
   </div>
+</div>
 </div>
 
 <script>
