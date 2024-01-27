@@ -1,8 +1,8 @@
 <h1><%= @user.name %>さんのいいねした投稿</h1>
 <table class="table table-striped favorites-index">
   <div class="d-flex">
-    <thead>
-      <tr>
+    <thead class="text-color">
+      <tr style="background-color: #008080;">
         <th></th>
         <th>名前</th>
         <th>性別</th>
@@ -40,12 +40,8 @@
         </script>
         </div>
         <td><%= link_to post.text,post_path(post.id) %></td>
-　　    <td id="favorite_buttons_<%= post.id %>">
-　　      <%= render "public/favorites/favorites", post: post %>
-　　    </td>
-　　    <td id="comment_counter">
-          <%= render "public/comments/counter", post: post %>
-        </td>
+　　    <td id="favorite_buttons_<%= post.id %>"><%= render "public/favorites/favorites", post: post %></td>
+　　    <td id="comment_counter"><%= render "public/comments/counter", post: post %></td>
       </tr>
       <% end %>
     </tbody>
