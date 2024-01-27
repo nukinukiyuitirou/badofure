@@ -119,7 +119,7 @@
 　<tbody>
   <% @user.posts.each do |post| %>
     <tr>
-      <td><%= image_tag(post.user.get_profile_image(100,100), class: "rounded-circle") %></td>
+      <td><%= image_tag(post.user.get_profile_image(100,100), class: "rounded-circle user-image") %></td>
       <td><%= post.user.name %></td>
       <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
       <td><div id="level-<%= post.id%>"></div></td>
