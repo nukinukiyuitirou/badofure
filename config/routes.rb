@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
   end
 
-
   scope module: :public do
     root to: "homes#top"
     resources :posts, only: [:index,:new,:create,:show,:edit,:update,:destroy] do
@@ -49,7 +48,7 @@ Rails.application.routes.draw do
     end
     resources :rooms, only: [:index,:show,:create]
     resources :messages, only: [:create]
-    
+    resources :notifications, only: [:index]
     resources :contacts, only: [:new, :create] do
       collection do
           post 'confirm'
@@ -57,8 +56,6 @@ Rails.application.routes.draw do
           get 'done'
       end
     end
-
-
 
     #検索機能を入れる予定
 
