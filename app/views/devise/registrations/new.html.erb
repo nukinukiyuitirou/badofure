@@ -1,85 +1,85 @@
 <div class="contact">
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4"></div>
-    <h2 class="col-lg-4" style="margin: 10px 0 20px 90px;">新規会員登録</h2>
-    <div class="col-lg-4"></div>
-  </div>
-  <div class="row">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8">
-      <%= form_with model: @user, url:  user_registration_path do |f| %>
-        <%= render "public/shared/error_messages", resource: resource %>
-        <table class="table table-bordered">
-          <tr>
-            <th class="contact-item">ユーザーネーム </th>
-            <td></td>
-            <td class="contact-body"><%= f.text_field :name %></td>
-          </tr>
-          <tr>
-            <th class="contact-item">メールアドレス</th>
-            <td></td>
-            <td class="contact-body"><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
-          </tr>
-          <tr>
-            <th class="contact-item">プロフィール画像</th>
-            <td></td>
-            <td class="contact-body"><%= f.file_field :profile_image, accept: "image/:" %></td>
-          </tr>
-          <tr>
-            <th class="contact-item">レベル</th>
-            <td></td>
-            <td id='level' class="contact-body">
-            <%= f.label :level,'レベル ' %>
-            <%= f.hidden_field :level, id:'level_star' %>
-            </td>
-          </tr>
-          <tr>
-            <th class="contact-item">好き、得意なショット</th>
-            <td></td>
-            <td class="contact-body"><%= f.text_field :shot %></td>
-          </tr>
-          <tr>
-            <th class="contact-item">地域</th>
-            <td></td>
-            <td class="contact-body"><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
-          </tr>
-          <tr>
-            <th class="contact-item">性別</th>
-            <td></td>
-            <td class="contact-body">
-              <%= f.radio_button :is_sex, "man" %>男性
-              <%= f.radio_button :is_sex, "woman" %>女性
-            </td>
-          </tr>
-          <tr>
-            <th class="contact-item">自己紹介</th>
-            <td></td>
-            <td class="contact-body"><%= f.text_area :introduction, rows:'5', placeholder: "自己紹介文", class: "w-100", id: "comment_textarea" %></td>
-          </tr>
-          <tr>
-            <th class="contact-item">パスワード（6文字以上)</th>
-            <td></td>
-            <td class="contact-body">  <% if @minimum_password_length %>
-                  <% end %>
-                  <%= f.password_field :password, autocomplete: "new-password" %>
-            </td>
-          </tr>
-          <tr>
-            <th class="contact-item">パスワード（確認用）</th>
-            <td></td>
-            <td class="contact-body"><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
-          </tr>
-        </table>
-        <div style="margin: 10px 0 20px 340px;"><%= f.submit " 新 規 登 録 ", class:"btn btn-success" %></div>
-
-      <% end %>
-      <h3><strong>既に登録済みの方</strong></h3>
-      <%= render "devise/shared/links" %>からログインしてください
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <h2 class="col-lg-4" style="margin: 10px 0 20px 90px;">新規会員登録</h2>
+      <div class="col-lg-4"></div>
     </div>
-    <div class="col-lg-2"></div>
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8">
+        <%= form_with model: @user, url:  user_registration_path do |f| %>
+          <%= render "public/shared/error_messages", resource: resource %>
+          <table class="table table-bordered">
+            <tr>
+              <th class="contact-item">ユーザーネーム </th>
+              <td></td>
+              <td class="contact-body"><%= f.text_field :name %></td>
+            </tr>
+            <tr>
+              <th class="contact-item">メールアドレス</th>
+              <td></td>
+              <td class="contact-body"><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
+            </tr>
+            <tr>
+              <th class="contact-item">プロフィール画像</th>
+              <td></td>
+              <td class="contact-body"><%= f.file_field :profile_image, accept: "image/:" %></td>
+            </tr>
+            <tr>
+              <th class="contact-item">レベル</th>
+              <td></td>
+              <td id='level' class="contact-body">
+              <%= f.label :level,'レベル ' %>
+              <%= f.hidden_field :level, id:'level_star' %>
+              </td>
+            </tr>
+            <tr>
+              <th class="contact-item">好き、得意なショット</th>
+              <td></td>
+              <td class="contact-body"><%= f.text_field :shot %></td>
+            </tr>
+            <tr>
+              <th class="contact-item">地域</th>
+              <td></td>
+              <td class="contact-body"><%= f.collection_select(:region_id, Region.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %></td>
+            </tr>
+            <tr>
+              <th class="contact-item">性別</th>
+              <td></td>
+              <td class="contact-body">
+                <%= f.radio_button :is_sex, "man" %>男性
+                <%= f.radio_button :is_sex, "woman" %>女性
+              </td>
+            </tr>
+            <tr>
+              <th class="contact-item">自己紹介</th>
+              <td></td>
+              <td class="contact-body"><%= f.text_area :introduction, rows:'5', placeholder: "自己紹介文", class: "w-100", id: "comment_textarea" %></td>
+            </tr>
+            <tr>
+              <th class="contact-item">パスワード（6文字以上)</th>
+              <td></td>
+              <td class="contact-body">  <% if @minimum_password_length %>
+                    <% end %>
+                    <%= f.password_field :password, autocomplete: "new-password" %>
+              </td>
+            </tr>
+            <tr>
+              <th class="contact-item">パスワード（確認用）</th>
+              <td></td>
+              <td class="contact-body"><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
+            </tr>
+          </table>
+          <div style="margin: 10px 0 20px 340px;"><%= f.submit " 新 規 登 録 ", class:"btn btn-success" %></div>
+  
+        <% end %>
+        <h3><strong>既に登録済みの方</strong></h3>
+        <%= render "devise/shared/links" %>からログインしてください
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
   </div>
-</div>
 </div>
 
 <script>
