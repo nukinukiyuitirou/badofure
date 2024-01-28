@@ -2,7 +2,7 @@
   <h2 style="margin: 50px 0 50px 0">
     <%= ("#{@another_entry.user.name}さんとのメッセージ") %>
 　</h2>
-　
+　<div style="background: #7da4cd;margin: 0 auto;width: 400px;margin-bottom: 30px;">
   <% @messages.each do |m| %>
     <div class="line-bc">
       <%if m.user_id == current_user.id%>
@@ -23,13 +23,13 @@
       <% end %>
     </div>
   <% end %>
-
+</div>
   <div class="chat-form-box">
     <%= form_for @message do |f| %>
       <div class=chat-form-group>
         <%= f.text_field :body %>
         <%= f.hidden_field :room_id, :value => @room.id %>
-        <%= f.submit "送信する" %>
+        <%= f.submit "送信する", style: "margin-bottom: 20px;" %>
       </div>
     <% end %>
   </div>
