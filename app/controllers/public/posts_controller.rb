@@ -1,9 +1,9 @@
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @posts = Post.all.page(params[:page]).per(9).order(created_at: :desc)
+    @posts = Post.active_posts.page(params[:page]).per(9).order(created_at: :desc)
     if params[:region_id].present? && params[:region_id] != "1"
-      @posts = Region.find(params[:region_id]).posts.page(params[:page]).per(9).order(created_at: :desc)
+      @posts = Region.find(params[:region_id]).posts.active_posts.page(params[:page]).per(9).order(created_at: :desc)
     end
     if params[:is_sex].present?
       user_ids = User.where(is_sex: params[:is_sex]).pluck(:id)
