@@ -53,10 +53,16 @@
     </div>
     <div class="col-5">
       <% @post.comments.each do |comment| %>
-        <%= image_tag comment.user.get_profile_image(100, 100) %>
-        <%= link_to comment.user.name, admin_user_path(comment.user) %>
-        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-        <%= link_to "削除", admin_post_comment_path(@post.id, comment.id), method: :delete, class: "btn btn-danger" %>
+        <table>
+          <tbody>
+            <tr>
+              <td><%= image_tag comment.user.get_profile_image(70, 70) %></td>
+              <td><%= link_to comment.user.name, admin_user_path(comment.user) %></td>
+              <td><%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %></td>
+              <td><%= link_to "削除", admin_post_comment_path(@post.id, comment.id), method: :delete, class: "btn btn-danger" %></td>
+            </tr>
+          </tbody>
+        </table>
       <% end %>
     </div>
     <div class="col-1"></div>

@@ -3,20 +3,21 @@ class Public::UsersController < ApplicationController
   # before_action :authenticate_user!
   before_action :ensure_guest_user, only: [:edit]
   def index
-    @users = User.all.page(params[:page]).per(9).order(created_at: :desc)
+    #@users = User.all.page(params[:page]).per(10).order(created_at: :desc)
+    @users = User.all.where(is_active: true).page(params[:page]).per(10).order(created_at: :desc)
+
     if params[:region_id].present? && params[:region_id] != "1"
-      @users = Region.find(params[:region_id]).users.page(params[:page]).per(9).order(created_at: :desc)
+      @users = Region.find(params[:region_id]).users.page(params[:page]).per(10).order(created_at: :desc)
     end
     if params[:is_sex].present?
-      @users = @users.where(is_sex: params[:is_sex]).page(params[:page]).per(9).order(created_at: :desc)
+      @users = @users.where(is_sex: params[:is_sex]).page(params[:page]).per(10).order(created_at: :desc)
     end
     if params[:level].present?
-      @users = @users.where(level: params[:level]).page(params[:page]).per(9).order(created_at: :desc)
+      @users = @users.where(level: params[:level]).page(params[:page]).per(10).order(created_at: :desc)
     end
     if params[:name].present?
-      @users = @users.where(name: params[:name]).page(params[:page]).per(9).order(created_at: :desc)
+      @users = @users.where(name: params[:name]).page(params[:page]).per(10).order(created_at: :desc)
     end
-    #byebug
   end
 
   def show
