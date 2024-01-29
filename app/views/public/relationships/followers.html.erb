@@ -16,7 +16,7 @@
       <tr>
         <td><%= image_tag user.get_profile_image(100,100), class: "rounded-circle d-block mx-auto user-image" %></td>
         <td><%= link_to user.name, user_path(user) %></td>
-        <td><%= user.is_sex? ? '男性' : '女性' %></td>
+        <td><%= user.is_sex == "man" ? '男性' : '女性' %></td>
         <td>
           <div id="level<%= user.id%>"></td>
            <script>

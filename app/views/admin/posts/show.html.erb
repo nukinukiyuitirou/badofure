@@ -6,11 +6,15 @@
       <table>
         <tbody>
           <tr>
-            <th><%= Post.human_attribute_name(:投稿者) %></th>
+            <th>投稿者</th>
             <td><%= link_to @post.user.name, admin_user_path(@post.user.id) %></td>
           </tr>
           <tr>
-            <th><%= Post.human_attribute_name(:求めるレベル) %></th>
+            <th>性別</th>
+            <td><%= @post.user.is_sex == "man" ? '男性' : '女性' %></td>
+          </tr>
+          <tr>
+            <th>求めるレベル</th>
             <td id="level<%= @post.id %>"></td>
             <script>
               $(document).on('turbolinks:load', function() {
@@ -30,11 +34,11 @@
             </script>
           </tr>
           <tr>
-            <th><%= Post.human_attribute_name(:地域) %></th>
+            <th>地域</th>
             <td><%= @post.region.name %></td>
           </tr>
           <tr>
-            <th><%= Post.human_attribute_name(:内容) %></th>
+            <th>詳細</th>
             <td><%= @post.text %></td>
           </tr>
           <tr>
