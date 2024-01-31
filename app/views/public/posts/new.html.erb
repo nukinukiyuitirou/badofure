@@ -8,6 +8,14 @@
         <div class="col-1" >
         </div>
         <div class="col-10">
+          <% if @post.errors.any? %>
+            <%= @post.errors.count %>件のエラーが発生しました
+            <ul>
+              <% @post.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          <% end %>
           <%= form_with model:@post,url:posts_path do |f| %>
             <table class="table table-bordered">
               <tbody>

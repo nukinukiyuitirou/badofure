@@ -5,6 +5,9 @@ class Post < ApplicationRecord
   has_many :favorites, dependent: :destroy
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :region
+
+  validates :text, presence: true
+
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
