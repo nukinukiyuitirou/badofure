@@ -5,6 +5,7 @@ class Public::CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
     if @comment.save
       flash[:notice] = "success"
+      @post.create_notification_comment!(current_user, @comment.id)
       # redirect_to post_path(@post)
     else
       flash.now[:alert] = "failed"
