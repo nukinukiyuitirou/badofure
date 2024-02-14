@@ -7,43 +7,42 @@
   <span>さんが</span>
   <br>
 
-
   <% case notification.action %>
     <% when 'dm' %>
       <p>あなたに</p>
       <h4><i class="fas fa-envelope"></i>DMを送りました</h4>
       <span>メッセージ内容:</span>
-        <%= truncate(notification.message.body, length: 20, omission: '... (一部表示)') %>
+      <%= truncate(notification.message.body, length: 20, omission: '... (一部表示)') %>
       <p>投稿時期： <%= time_ago_in_words(notification.created_at).upcase %>前</p>
       <%= link_to room_path(notification.room) do %>
         <h4>DMの送信画面に移動</h4>
       <% end %>
       <hr>
-
-
-      <% when 'follow' %>
+    <% when 'follow' %>
       <%= "あなたをフォローしました" %>
       <hr>
-
-      <% when 'like' %>
+    <% when 'like' %>
       <%= link_to 'あなたの投稿', notification.post, style: "font-weight: bold;" %>
       <%= "にいいねしました" %>
       <hr>
-
-      <% when 'comment' %>
-      <% if notification.post.user_id ==  visitor.id %>
+    <% when 'comment' %>
+      <% if notification.post.user_id == visitor.id %>
         <%= link_to "あなたの投稿", notification.post, style: "font-weight: bold;" %>
       <% else %>
-      　<span><%=link_to post_path(notification.post) do %></span>
-      　  <strong><%= notification.post.user.name + 'さんの投稿' %><%= "にコメントしました" %></strong>
-      　<% end %>
-      　<p class= "text-muted.mb-0">
-      　  <%= Comment.find_by(id: notification.comment_id)&.comment %>
-      　</p>
-      　<div class= "small.text-muted.text-right">
-      　  <%= time_ago_in_words(notification.created_at).upcase %>
-      　</div>
+        <span>
+          <%= link_to post_path(notification.post) do %>
+            <strong><%= notification.post.user.name + 'さんの投稿' %><%= "にコメントしました" %></strong>
+          <% end %>
+        </span>
+        <p class="text-muted.mb-0">
+          <%= Comment.find_by(id: notification.comment_id)&.comment %>
+        </p>
+        <div class="small text-muted text-right">
+          <%= time_ago_in_words(notification.created_at).upcase %>
+        </div>
         <hr>
       <% end %>
+  <% else %>
+    無効なActionType: <%= notification.action %>
   <% end %>
 </span>
