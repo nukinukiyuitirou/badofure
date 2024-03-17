@@ -18,6 +18,7 @@
             <th><div style="margin: 0 0 0 10px;"><%= link_to @user.followers.count, user_followers_path(@user) %></div></th>
           </tr>
         </table>
+        <div style="margin: 0 0 0 0;"><%= link_to "ユーザーのいいね一覧",favorites_user_path(@user) %></div>
         <div class="btn-toolbar">
           <div class="btn-group">
             <div style="margin: 10px 0 10px 0;">
@@ -93,7 +94,6 @@
         	<td><%= @user.introduction %></td>
         </tr>
       </table>
-      <div style="margin: 0 0 0 0;"><%= link_to "ユーザーのいいね一覧",favorites_user_path(@user) %></div>
       <div style="margin: 0 0 0 800px;">
         <% if current_user == @user && !@user.guest_user? %>
           <%= link_to "編集する",edit_user_path(@user),class: "btn btn-info" %>
