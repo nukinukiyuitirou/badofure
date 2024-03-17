@@ -99,7 +99,11 @@
         </ul>
         <div class="card-body">
           <div id="favorite_buttons_<%= post.id %>" class="text-right"><%= render "public/favorites/favorites", post: post %></div>
-          <div id="comment_counter" class="text-right"><%= render "public/comments/counter", post: post %></div>
+          <%= link_to post_path(post) do %>
+            <div id="comment_counter" class="text-right">
+              <%= render "public/comments/counter", post: post %>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
