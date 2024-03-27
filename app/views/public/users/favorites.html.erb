@@ -1,52 +1,58 @@
+<div style="text-align:center;">
 <h1><%= @user.name %>さんのいいねした投稿</h1>
-<table class="table table-striped favorites-index">
-  <div class="d-flex">
-    <thead class="text-color">
-      <tr style="background-color: #008080;">
-        <th></th>
-        <th>名前</th>
-        <th>性別</th>
-        <th>レベル</th>
-        <th>投稿文</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @favorite_posts.each do |post| %>
-      <tr>
-        <td>
-          <%= link_to user_path(post.user.id) do %>
-            <%= image_tag post.user.get_profile_image(100,100), class: "rounded-circle d-block mx-auto user-image" %>
-          <% end %>
-        </td>
-        <td><%= link_to post.user.name,user_path(post.user.id) %></td>
-        <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
-        <td><div id="level<%= post.id%>"></td>
-        <script>
-          $(document).on('turbolinks:load', function() {
-            let elem = document.querySelector('#level<%= post.id%>');
-            if (elem == null) return;
-            elem.innerHTML = "";
-            let opt = {
-              size      : 36,
-              starOff   : '<%= asset_path('star-off.png') %>',
-              starOn    : '<%= asset_path('star-on.png') %>',
-              half      : false,
-              readOnly: true,
-              score: <%= post.level %>,
-            }
-            raty(elem, opt);
-          });
-        </script>
+  <div class="row">
+    <div class="offset-2 col-8">
+      <table class="table table-striped favorites-index">
+        <div class="d-flex">
+          <thead class="text-color">
+            <tr style="background-color: #008080;">
+              <th></th>
+              <th>名前</th>
+              <th>性別</th>
+              <th>レベル</th>
+              <th>投稿文</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @favorite_posts.each do |post| %>
+            <tr>
+              <td>
+                <%= link_to user_path(post.user.id) do %>
+                  <%= image_tag post.user.get_profile_image(100,100), class: "rounded-circle d-block mx-auto user-image" %>
+                <% end %>
+              </td>
+              <td><%= link_to post.user.name,user_path(post.user.id) %></td>
+              <td><%= post.user.is_sex == "man" ? '男性' : '女性' %></td>
+              <td><div id="level<%= post.id%>"></td>
+              <script>
+                $(document).on('turbolinks:load', function() {
+                  let elem = document.querySelector('#level<%= post.id%>');
+                  if (elem == null) return;
+                  elem.innerHTML = "";
+                  let opt = {
+                    size      : 36,
+                    starOff   : '<%= asset_path('star-off.png') %>',
+                    starOn    : '<%= asset_path('star-on.png') %>',
+                    half      : false,
+                    readOnly: true,
+                    score: <%= post.level %>,
+                  }
+                  raty(elem, opt);
+                });
+              </script>
+              </div>
+              <td><%= link_to post.text,post_path(post.id) %></td>
+      　　    <td id="favorite_buttons_<%= post.id %>"><%= render "public/favorites/favorites", post: post %></td>
+      　　    <td id="comment_counter"><%= render "public/comments/counter", post: post %></td>
+            </tr>
+            <% end %>
+          </tbody>
         </div>
-        <td><%= link_to post.text,post_path(post.id) %></td>
-　　    <td id="favorite_buttons_<%= post.id %>"><%= render "public/favorites/favorites", post: post %></td>
-　　    <td id="comment_counter"><%= render "public/comments/counter", post: post %></td>
-      </tr>
-      <% end %>
-    </tbody>
+      </table>
+    </div>
   </div>
-</table>
+</div>
 
 <script>
   $(document).on('turbolinks:load', function() {
